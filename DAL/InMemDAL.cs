@@ -107,9 +107,16 @@ namespace LugggeTracker.DAL
         public List<Luggage> GetLuggages(string pnr)
         {
             List<Luggage> luggages = null;
+            List<Passenger> passengers = null;
             try
             {
-                //luggages = Passengers.Where(e => e.PNR == pnr).ToList();
+                passengers = Passengers.Where(e => e.PNR == pnr).ToList();
+
+                passengers.ForEach(delegate(Passenger passenger)
+                {
+                    luggages.AddRange(passenger.Luggages);
+                });
+
                 return luggages;
             }
             catch
@@ -144,13 +151,6 @@ namespace LugggeTracker.DAL
             {
                 throw;
             }
-        }
-
-        public void UpdateLuggage(string TagId, string Weight, string Measurement, string Description, LuggageStatus Status, DateTime LastStatusChange)
-        {
-            throw new NotImplementedException();
-        }
-
-       
+        }              
     }
 }
