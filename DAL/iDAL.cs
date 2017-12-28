@@ -7,50 +7,20 @@ namespace LugggeTracker.DAL
 {
     interface IDAL
     {
+        void AddPassenger(Passenger passenger);
 
-        void AddPassenger(string PNR,
-                            string PassengerFirstName, 
-                            string PassengerMiddleName,
-                            string PassengerLastName,
-                            string FlightNumber,
-                            string SeatNumber,
-                            string Address,
-                            string Phone,
-                            string EMail,
-                            string Remarks,
-                            List<Luggage> Luggages);
+        void UpdatePassenger(Passenger passenger);
 
-        void UpdatePassenger(string PNR,
-                            string PassengerFirstName,
-                            string PassengerMiddleName,
-                            string PassengerLastName,
-                            string FlightNumber,
-                            string SeatNumber,
-                            string Address,
-                            string Phone,
-                            string EMail,
-                            string Remarks,
-                            List<Luggage> Luggages);
+        void AddLuggage(Luggage luggage);
 
-        void AddLuggage(string TagId,
-                            string Weight,
-                            string Measurement,
-                            string Description,
-                            LuggageStatus Status,
-                            DateTime LastStatusChange);
+        void UpdateLuggage(Luggage luggage);
 
-        void UpdateLuggage(string TagId,
-                            string Weight,
-                            string Measurement,
-                            string Description,
-                            LuggageStatus Status,
-                            DateTime LastStatusChange);
+        Luggage GetLuggage(string tagId);
 
-        List<Luggage> GetLuggages(string PNR);
+        List<Luggage> GetLuggages(UInt64 passengerId);
 
-        Luggage GetLuggage(string TagId);
+        Passenger GetPassenger(UInt64 passengerId);
 
-        List<Passenger> GetPassengers(string PNR);
-
+        List<Passenger> GetPassengers(string pnr);
     }
 }

@@ -11,15 +11,11 @@ namespace LugggeTracker.DAL
         List<Luggage> Luggages = new List<Luggage>();
         List<Passenger> Passengers = new List<Passenger>();
 
-        public void AddLuggage(string tagId, string weight, string measurement, string description, LuggageStatus status, DateTime lastStatusChange)
+        public void AddLuggage(Luggage luggage)
         {
             try
             {
-                Luggages.Add(new Luggage(tagId) {Weight = weight,
-                                                Measurement = measurement,
-                                                Description = description,
-                                                Status = status,
-                                                LastStatusChange = lastStatusChange});
+                Luggages.Add(luggage);
             }
             catch
             {
@@ -27,18 +23,17 @@ namespace LugggeTracker.DAL
             }
         }
 
-        public void UpdateLuggage(string tagId, string weight, string measurement, string description, LuggageStatus status, DateTime lastStatusChange)
+        public void UpdateLuggage(Luggage luggage)
         {
             try
             {
+                Luggage thisLuggage = Luggages.Single(e => e.TagId == luggage.TagId);
 
-                Luggage luggage = Luggages.Single(e => e.TagId == tagId);
-
-                luggage.Weight = weight;
-                luggage.Measurement = measurement;
-                luggage.Description = description;
-                luggage.Status = status;
-                luggage.LastStatusChange = lastStatusChange;
+                thisLuggage.Weight = luggage.Weight;
+                thisLuggage.Measurement = luggage.Measurement;
+                thisLuggage.Description = luggage.Description;
+                thisLuggage.Status = luggage.Status;
+                thisLuggage.LastStatusChange = luggage.LastStatusChange;
             }
             catch
             {
@@ -46,18 +41,11 @@ namespace LugggeTracker.DAL
             }
         }
 
-        public void AddPassenger(UInt64 passengerId, string pnr, string passengerFirstName, string passengerMiddleName, string passengerLastName, string flightNumber, string seatNumber, string address, string Phone, string eMail, string remarks, List<Luggage> luggages)
+        public void AddPassenger(Passenger passenger)
         {
             try
             {
-                Passengers.Add(new Passenger(passengerId, pnr,passengerFirstName,passengerLastName){PassengerMiddleName = passengerMiddleName,
-                                                                        FlightNumber = flightNumber,
-                                                                        SeatNumber = seatNumber,
-                                                                        Address = address,
-                                                                        Phone = Phone,
-                                                                        EMail = eMail,
-                                                                        Remarks = remarks,
-                                                                        Luggages = luggages});
+                Passengers.Add(passenger);
             }
             catch
             {
@@ -65,24 +53,24 @@ namespace LugggeTracker.DAL
             }
         }
 
-        public void UpdatePassenger(UInt64 passengerId, string pnr, string passengerFirstName, string passengerMiddleName, string passengerLastName, string flightNumber, string seatNumber, string address, string phone, string eMail, string remarks, List<Luggage> luggages)
+        public void UpdatePassenger(Passenger passenger)
         {
             try
             {
-                Passenger passenger = Passengers.Single(e => e.PassengerId == passengerId);
+                Passenger thisPassenger = Passengers.Single(e => e.PassengerId == passenger.PassengerId);
 
-                passenger.PNR = pnr;
-                passenger.PassengerFirstName = passengerFirstName;
-                passenger.PassengerLastName = passengerLastName;
-                passenger.PassengerMiddleName = passengerMiddleName;
-                passenger.FlightNumber = flightNumber;
-                passenger.SeatNumber = seatNumber;
-                passenger.Address = address;
-                passenger.Phone = phone;
-                passenger.EMail = eMail;
-                passenger.Remarks = remarks;
-                passenger.Luggages = luggages;
-
+                thisPassenger.PNR = passenger.PNR;
+                thisPassenger.PassengerFirstName = passenger.PassengerFirstName;
+                thisPassenger.PassengerLastName = passenger.PassengerLastName;
+                thisPassenger.PassengerMiddleName = passenger.PassengerMiddleName;
+                thisPassenger.FlightNumber = passenger.FlightNumber;
+                thisPassenger.SeatNumber = passenger.SeatNumber;
+                thisPassenger.Address = passenger.Address;
+                thisPassenger.Phone = passenger.Phone;
+                thisPassenger.EMail = passenger.EMail;
+                thisPassenger.Remarks = passenger.Remarks;
+                thisPassenger.Subscribed = passenger.Subscribed;
+                thisPassenger.Luggages = passenger.Luggages;
             }
             catch
             {
@@ -104,18 +92,11 @@ namespace LugggeTracker.DAL
             }
         }
 
-        public List<Luggage> GetLuggages(string pnr)
+        public List<Luggage> GetLuggages(UInt64 passengerId)
         {
-            List<Luggage> luggages = null;
-            List<Passenger> passengers = null;
             try
             {
-                passengers = Passengers.Where(e => e.PNR == pnr).ToList();
-
-                passengers.ForEach(delegate(Passenger passenger)
-                {
-                    luggages.AddRange(passenger.Luggages);
-                });
+                List<Luggage> luggages = Passengers.Single(e => e.PassengerId == passengerId).Luggages;
 
                 return luggages;
             }

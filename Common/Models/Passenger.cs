@@ -28,6 +28,8 @@ namespace LuggageTracker.Common
 
         public string Remarks { get; set; }
 
+        public bool Subscribed { get; set; }
+
         public List<Luggage> Luggages { get; set; }
 
         public Passenger(UInt64 passengerId,string pnr, string passengerFirstName, string passengerLastName)
