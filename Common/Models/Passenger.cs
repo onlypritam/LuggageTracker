@@ -34,7 +34,10 @@ namespace LuggageTracker.Common
 
         public Passenger(UInt64 passengerId,string pnr, string passengerFirstName, string passengerLastName)
         {
-
+            this.PassengerId = passengerId;
+            this.PNR = pnr;
+            this.PassengerFirstName = passengerFirstName;
+            this.PassengerlastName = passengerLastName;
         }
 
     }
