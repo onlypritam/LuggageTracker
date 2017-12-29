@@ -15,6 +15,16 @@ namespace LugggeTracker.DAL
         {
             try
             {
+                if(luggage is null)
+                {
+                    throw new ArgumentNullException();
+                }
+                
+                if(string.IsNullOrWhiteSpace(luggage.TagId))
+                {
+                    throw new ArgumentException();
+                {
+                
                 Luggages.Add(luggage);
             }
             catch
@@ -27,6 +37,16 @@ namespace LugggeTracker.DAL
         {
             try
             {
+                 if(luggage is null)
+                {
+                    throw new ArgumentNullException();
+                }
+                
+                if(string.IsNullOrWhiteSpace(luggage.TagId))
+                {
+                    throw new ArgumentException();
+                {
+                
                 Luggage thisLuggage = Luggages.Single(e => e.TagId == luggage.TagId);
 
                 thisLuggage.Weight = luggage.Weight;
@@ -45,6 +65,19 @@ namespace LugggeTracker.DAL
         {
             try
             {
+                if(passenger is null)
+                {
+                    throw new ArgumentNullException();
+                }
+                
+                if(passenger.PassengerId < 1 or 
+                        string.IsNullOrWhiteSpace(passenger.PNR) or 
+                        string.IsNullOrWhiteSpace(passenger.PassengerFirstName) or
+                        string.IsNullOrWhiteSpace(passenger.PassengerLastName))
+                {
+                    throw new ArgumentException();
+                {
+                
                 Passengers.Add(passenger);
             }
             catch
@@ -57,6 +90,19 @@ namespace LugggeTracker.DAL
         {
             try
             {
+                if(passenger is null)
+                {
+                    throw new ArgumentNullException();
+                }
+                
+                if(passenger.PassengerId < 1 or 
+                        string.IsNullOrWhiteSpace(passenger.PNR) or 
+                        string.IsNullOrWhiteSpace(passenger.PassengerFirstName) or
+                        string.IsNullOrWhiteSpace(passenger.PassengerLastName))
+                {
+                    throw new ArgumentException();
+                {
+                
                 Passenger thisPassenger = Passengers.Single(e => e.PassengerId == passenger.PassengerId);
 
                 thisPassenger.PNR = passenger.PNR;
@@ -80,10 +126,14 @@ namespace LugggeTracker.DAL
 
         public Luggage GetLuggage(string tagId)
         {
-            Luggage luggage = null;
             try
             {
-                luggage = Luggages.Single(e => e.TagId == tagId);
+                if(String.IsNullOrWhiteSpace(tagId))
+                {
+                    throw new ArgumentNullException();
+                }
+                
+                Luggage luggage = Luggages.Single(e => e.TagId == tagId);
                 return luggage;
             }
             catch
@@ -108,10 +158,9 @@ namespace LugggeTracker.DAL
 
         public Passenger GetPassenger(UInt64 passengerId)
         {
-            Passenger passenger = null;
             try
             {
-                passenger = Passengers.Single(e => e.PassengerId == passengerId);
+                Passenger  passenger = Passengers.Single(e => e.PassengerId == passengerId);
                 return passenger;
             }
             catch
@@ -122,10 +171,14 @@ namespace LugggeTracker.DAL
 
         public List<Passenger> GetPassengers(string pnr)
         {
-            List<Passenger> passengers = null;
             try
             {
-                passengers = Passengers.Where(e => e.PNR == pnr).ToList();
+                if(String.IsNullOrWhiteSpace(pnr))
+                {
+                    throw new ArgumentNullException();
+                }
+                
+                List<Passenger> passengers = Passengers.Where(e => e.PNR == pnr).ToList();
                 return passengers;
             }
             catch
