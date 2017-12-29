@@ -21,7 +21,7 @@ namespace LuggageTracker.Common
 
         public Luggage(string tagId)
         {
-            this.TagId = TagId;
+            this.TagId = tagId;
         }
 
     }

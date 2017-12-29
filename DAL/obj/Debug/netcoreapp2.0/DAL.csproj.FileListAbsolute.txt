@@ -1,0 +1,13 @@
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\obj\Debug\netcoreapp2.0\DAL.csprojResolveAssemblyReference.cache
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\obj\Debug\netcoreapp2.0\DAL.csproj.CoreCompileInputs.cache
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\obj\Debug\netcoreapp2.0\DAL.AssemblyInfoInputs.cache
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\obj\Debug\netcoreapp2.0\DAL.AssemblyInfo.cs
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\bin\Debug\netcoreapp2.0\DAL.deps.json
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\bin\Debug\netcoreapp2.0\DAL.dll
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\bin\Debug\netcoreapp2.0\DAL.pdb
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\bin\Debug\netcoreapp2.0\Common.dll
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\bin\Debug\netcoreapp2.0\System.Data.SqlClient.dll
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\bin\Debug\netcoreapp2.0\Common.pdb
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\bin\Debug\netcoreapp2.0\System.Data.SqlClient.xml
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\obj\Debug\netcoreapp2.0\DAL.dll
+C:\Users\Pritam\Source\Repos\LuggageTracker\DAL\obj\Debug\netcoreapp2.0\DAL.pdb

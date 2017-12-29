@@ -1,26 +1,26 @@
 ﻿using LuggageTracker.Common;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace LugggeTracker.DAL
 {
-    interface IDAL
+    public interface IDAL
     {
-        void AddPassenger(Passenger passenger);
+        Task AddPassenger(Passenger passenger);
 
-        void UpdatePassenger(Passenger passenger);
+        Task UpdatePassenger(Passenger passenger);
 
-        void AddLuggage(Luggage luggage);
+        Task AddLuggage(Luggage luggage);
 
-        void UpdateLuggage(Luggage luggage);
+        Task UpdateLuggage(Luggage luggage);
 
-        Luggage GetLuggage(string tagId);
+        Task<Luggage> GetLuggage(string tagId);
 
-        List<Luggage> GetLuggages(UInt64 passengerId);
+        Task<List<Luggage>> GetLuggages(UInt64 passengerId);
 
-        Passenger GetPassenger(UInt64 passengerId);
+        Task<Passenger> GetPassenger(UInt64 passengerId);
 
-        List<Passenger> GetPassengers(string pnr);
+        Task<List<Passenger>> GetPassengers(string pnr);
     }
 }

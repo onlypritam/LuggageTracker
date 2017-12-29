@@ -1,37 +1,51 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
+using LuggageTracker.Common;
 
 namespace LugggeTracker.DAL
 {
-    public class SQLDAL
+    public class SQLDAL : IDAL
     {
-
-        string SqlConnectionString = "integrated security=SSPI;Database=Master;Server=."; //TODO read connection string from config
-
-        public void AddPassenger(string passengerFirstName, 
-                                    string passengerMiddleName,
-                                    string passengerLastName,
-                                    )
+        public Task AddLuggage(Luggage luggage)
         {
-            try
-            {
-                using (SqlConnection SqlConn = new SqlConnection(SqlConnectionString))
-                {
-                    SqlConn.Open();
-                    string SqlCommand = String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                        "Insert into Passengers values('{0}','{1}')", phoneNo, name);
-
-                    using (SqlCommand SqlCmd = new SqlCommand(SqlCommand, SqlConn))
-                    {
-                        SqlCmd.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch
-            {
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
+        public Task AddPassenger(Passenger passenger)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Luggage> GetLuggage(string tagId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Luggage>> GetLuggages(ulong passengerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Passenger> GetPassenger(ulong passengerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Passenger>> GetPassengers(string pnr)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateLuggage(Luggage luggage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdatePassenger(Passenger passenger)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

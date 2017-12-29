@@ -1,0 +1,11 @@
+C:\Users\Pritam\Source\Repos\LuggageTracker\LuggageTracker\bin\Debug\netcoreapp2.0\LuggageTracker.deps.json
+C:\Users\Pritam\Source\Repos\LuggageTracker\LuggageTracker\bin\Debug\netcoreapp2.0\LuggageTracker.runtimeconfig.json
+C:\Users\Pritam\Source\Repos\LuggageTracker\LuggageTracker\bin\Debug\netcoreapp2.0\LuggageTracker.runtimeconfig.dev.json
+C:\Users\Pritam\Source\Repos\LuggageTracker\LuggageTracker\bin\Debug\netcoreapp2.0\LuggageTracker.dll
+C:\Users\Pritam\Source\Repos\LuggageTracker\LuggageTracker\bin\Debug\netcoreapp2.0\LuggageTracker.pdb
+C:\Users\Pritam\Source\Repos\LuggageTracker\LuggageTracker\obj\Debug\netcoreapp2.0\LuggageTracker.csproj.CoreCompileInputs.cache
+C:\Users\Pritam\Source\Repos\LuggageTracker\LuggageTracker\obj\Debug\netcoreapp2.0\LuggageTracker.AssemblyInfoInputs.cache
+C:\Users\Pritam\Source\Repos\LuggageTracker\LuggageTracker\obj\Debug\netcoreapp2.0\LuggageTracker.AssemblyInfo.cs
+C:\Users\Pritam\Source\Repos\LuggageTracker\LuggageTracker\obj\Debug\netcoreapp2.0\LuggageTracker.dll
+C:\Users\Pritam\Source\Repos\LuggageTracker\LuggageTracker\obj\Debug\netcoreapp2.0\LuggageTracker.pdb
+C:\Users\Pritam\Source\Repos\LuggageTracker\LuggageTracker\obj\Debug\netcoreapp2.0\LuggageTracker.csprojResolveAssemblyReference.cache

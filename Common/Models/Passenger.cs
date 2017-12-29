@@ -37,7 +37,7 @@ namespace LuggageTracker.Common
             this.PassengerId = passengerId;
             this.PNR = pnr;
             this.PassengerFirstName = passengerFirstName;
-            this.PassengerlastName = passengerLastName;
+            this.PassengerLastName = passengerLastName;
         }
 
     }
