@@ -22,7 +22,7 @@ namespace LuggageTracker.UnitTest
 
             luggage = new Luggage(Guid.NewGuid().ToString());
 
-            passenger = new Passenger(1, Guid.NewGuid().ToString(), "TestFirstName", "TestLastName");
+            passenger = new Passenger(1, Guid.NewGuid().ToString(), "Test_FirstName", "Test_LastName");
         }
 
         [TestMethod]
