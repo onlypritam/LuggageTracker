@@ -15,16 +15,8 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                if(luggage is null)
-                {
-                    throw new ArgumentNullException("Luggage cannnot be null");
-                }
+                ValidateLuggage(luggage);
 
-                if (string.IsNullOrWhiteSpace(luggage.TagId))
-                {
-                    throw new ArgumentException("Invalid TagId");
-                }
-                
                 await Task.Run(() => Luggages.Add(luggage));
             }
             catch
@@ -37,18 +29,9 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                if (luggage is null)
-                {
-                    throw new ArgumentNullException("Luggage cannnot be null");
-                }
+                ValidateLuggage(luggage);
 
-                if (string.IsNullOrWhiteSpace(luggage.TagId))
-                {
-                    throw new ArgumentException("Invalid TagId");
-                }
-
-
-                Luggage thisLuggage = await Task.Run(()=> Luggages.Single(e => e.TagId == luggage.TagId));
+                Luggage thisLuggage = await Task.Run(() => Luggages.Single(e => e.TagId == luggage.TagId));
 
                 thisLuggage.Weight = luggage.Weight;
                 thisLuggage.Measurement = luggage.Measurement;
@@ -66,31 +49,7 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                if(passenger is null)
-                {
-                    throw new ArgumentNullException("Passenger cannot be null");
-                }
-                
-                if(passenger.PassengerId < 1 )
-                {
-                    throw new ArgumentException("PassengerId cannot be less than 1");
-                }
-
-                if (string.IsNullOrWhiteSpace(passenger.PNR))
-                {
-                    throw new ArgumentException("Invalid PNR");
-                }
-
-                if (string.IsNullOrWhiteSpace(passenger.PassengerFirstName))
-                {
-                    throw new ArgumentException("Invalid PassengerFirstName");
-                }
-
-                if (string.IsNullOrWhiteSpace(passenger.PassengerLastName))
-                {
-                    throw new ArgumentException("Invalid PassengerLastName");
-                }
-
+                ValidatePassenger(passenger);
 
                 await Task.Run(() => Passengers.Add(passenger));
             }
@@ -104,30 +63,7 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                if (passenger is null)
-                {
-                    throw new ArgumentNullException("Passenger cannot be null");
-                }
-
-                if (passenger.PassengerId < 1)
-                {
-                    throw new ArgumentException("PassengerId cannot be less than 1");
-                }
-
-                if (string.IsNullOrWhiteSpace(passenger.PNR))
-                {
-                    throw new ArgumentException("Invalid PNR");
-                }
-
-                if (string.IsNullOrWhiteSpace(passenger.PassengerFirstName))
-                {
-                    throw new ArgumentException("Invalid PassengerFirstName");
-                }
-
-                if (string.IsNullOrWhiteSpace(passenger.PassengerLastName))
-                {
-                    throw new ArgumentException("Invalid PassengerLastName");
-                }
+                ValidatePassenger(passenger);
 
                 Passenger thisPassenger = await Task.Run(() =>Passengers.Single(e => e.PassengerId == passenger.PassengerId));
 
@@ -211,6 +147,48 @@ namespace LugggeTracker.DAL
             {
                 throw;
             }
-        }              
+        }
+
+        private static void ValidatePassenger(Passenger passenger)
+        {
+            if (passenger is null)
+            {
+                throw new ArgumentNullException("Passenger cannot be null");
+            }
+
+            if (passenger.PassengerId < 1)
+            {
+                throw new ArgumentException("PassengerId cannot be less than 1");
+            }
+
+            if (string.IsNullOrWhiteSpace(passenger.PNR))
+            {
+                throw new ArgumentException("Invalid PNR");
+            }
+
+            if (string.IsNullOrWhiteSpace(passenger.PassengerFirstName))
+            {
+                throw new ArgumentException("Invalid PassengerFirstName");
+            }
+
+            if (string.IsNullOrWhiteSpace(passenger.PassengerLastName))
+            {
+                throw new ArgumentException("Invalid PassengerLastName");
+            }
+        }
+
+        private static void ValidateLuggage(Luggage luggage)
+        {
+            if (luggage is null)
+            {
+                throw new ArgumentNullException("Luggage cannnot be null");
+            }
+
+            if (string.IsNullOrWhiteSpace(luggage.TagId))
+            {
+                throw new ArgumentException("Invalid TagId");
+            }
+        }
+
     }
 }
