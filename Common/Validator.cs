@@ -5,7 +5,7 @@ namespace LuggageTracker.Common
 {
     public static class Validator
     {
-        public static void ValidatePassenger(Passenger passenger)
+        public static void ValidatePassengerOrThrowException(Passenger passenger)
         {
             if (passenger is null)
             {
@@ -33,7 +33,7 @@ namespace LuggageTracker.Common
             }
         }
 
-        public static void ValidateLuggage(Luggage luggage)
+        public static void ValidateLuggageOrThrowException(Luggage luggage)
         {
             if (luggage is null)
             {

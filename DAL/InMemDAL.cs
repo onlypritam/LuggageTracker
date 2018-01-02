@@ -1,9 +1,10 @@
-﻿using LuggageTracker.Model;
+﻿using DAL.Exceptions;
+using LuggageTracker.Common;
+using LuggageTracker.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LuggageTracker.Common;
 
 namespace LugggeTracker.DAL
 {
@@ -16,13 +17,13 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                Validator.ValidateLuggage(luggage);
+                Validator.ValidateLuggageOrThrowException(luggage);
 
                 await Task.Run(() => Luggages.Add(luggage));
             }
             catch
             {
-                throw; 
+                throw;
             }
         }
 
@@ -30,7 +31,7 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                Validator.ValidateLuggage(luggage);
+                Validator.ValidateLuggageOrThrowException(luggage);
 
                 Luggage thisLuggage = await Task.Run(() => Luggages.Single(e => e.LuggageId == luggage.LuggageId));
 
@@ -51,7 +52,7 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                Validator.ValidatePassenger(passenger);
+                Validator.ValidatePassengerOrThrowException(passenger);
 
                 await Task.Run(() => Passengers.Add(passenger));
             }
@@ -65,7 +66,7 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                Validator.ValidatePassenger(passenger);
+                Validator.ValidatePassengerOrThrowException(passenger);
 
                 Passenger thisPassenger = await Task.Run(() =>Passengers.Single(e => e.PassengerId == passenger.PassengerId));
 

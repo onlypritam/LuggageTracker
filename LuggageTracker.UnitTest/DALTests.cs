@@ -22,7 +22,7 @@ namespace LuggageTracker.UnitTest
 
             luggage = new Luggage(Guid.NewGuid().ToString());
 
-            passenger = new Passenger(1, Guid.NewGuid().ToString(), "Test_FirstName", "Test_LastName");
+            passenger = new Passenger(1, Guid.NewGuid().ToString(), "TestFirstName", "TestLastName");
         }
 
         [TestMethod]
@@ -224,8 +224,6 @@ namespace LuggageTracker.UnitTest
             luggages.Add(new Luggage(Guid.NewGuid().ToString()));
 
             newPassenger.Luggages = luggages;
-            await DALContext.GetLuggages(Id);
-
             Assert.AreEqual(newPassenger.Luggages.Count, 2);
         }
 

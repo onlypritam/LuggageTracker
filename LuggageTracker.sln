@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuggageTracker.UnitTest", "LuggageTracker.UnitTest\LuggageTracker.UnitTest.csproj", "{C981D68B-691F-4FB8-91E0-D210B6822939}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{83F88C57-4A1A-4976-84B5-D4E3EED9EB9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{83F88C57-4A1A-4976-84B5-D4E3EED9EB9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{D8D1D7B5-345E-4BDD-AF8A-9CAB977496B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{D8D1D7B5-345E-4BDD-AF8A-9CAB977496B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuggageTrackerBL", "LuggageTrackerBL\LuggageTrackerBL.csproj", "{A0C1EC35-8738-4136-9FE0-8A07AB245C13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D8D1D7B5-345E-4BDD-AF8A-9CAB977496B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8D1D7B5-345E-4BDD-AF8A-9CAB977496B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8D1D7B5-345E-4BDD-AF8A-9CAB977496B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0C1EC35-8738-4136-9FE0-8A07AB245C13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0C1EC35-8738-4136-9FE0-8A07AB245C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0C1EC35-8738-4136-9FE0-8A07AB245C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0C1EC35-8738-4136-9FE0-8A07AB245C13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
