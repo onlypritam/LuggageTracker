@@ -19,9 +19,9 @@ namespace LuggageTracker.Model
 
         public DateTime LastStatusChange { get; set; }
 
-        public Luggage(string tagId)
+        public Luggage(string luggageId)
         {
-            this.LuggageId = tagId;
+            this.LuggageId = luggageId;
         }
 
     }

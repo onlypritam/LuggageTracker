@@ -110,14 +110,6 @@ namespace LuggageTracker.UnitTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public async Task ShouldFailToAddPassengerWithPassengerIdBelow1()
-        {
-            passenger.PassengerId = 0;
-            await DALContext.AddPassenger(passenger);
-        }
-
-        [TestMethod]
         public async Task ShouldUpdateLuggageSuccessfully()
         {
             string tag = Guid.NewGuid().ToString();

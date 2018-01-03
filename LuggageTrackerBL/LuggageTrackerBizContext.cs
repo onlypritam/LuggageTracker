@@ -1,14 +1,18 @@
-﻿using LuggageTracker.Model;
+﻿using LuggageTracker.Common;
+using LuggageTracker.Model;
 using LuggageTrackerBL.Exceptions;
 using LugggeTracker.DAL;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LuggageTrackerBL.BizContext
 {
+    /// <summary>
+    /// For now this layer is not doing much in addition to the DAL. But I am just keeping a provision to add functionality in the future.
+    /// </summary>
+
     class LuggageTrackerBizContext
     {
         private IDAL DAL = null;
@@ -23,11 +27,12 @@ namespace LuggageTrackerBL.BizContext
         {
             try
             {
-
+                Validator.ValidateLuggageOrThrowException(luggage);
+                await  DAL.AddLuggage(luggage);
             }
             catch (Exception ex)
             {
-                throw new LuggageTrackerBizContextException("Failed to add luggage to storage", ex)
+                throw new LuggageTrackerBizContextException("Failed to add luggage", ex)
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
                 };
@@ -38,11 +43,118 @@ namespace LuggageTrackerBL.BizContext
         {
             try
             {
-                //Validator.ValidateLuggage(luggage);
+                Validator.ValidateLuggageOrThrowException(luggage);
+                await DAL.UpdateLuggage(luggage);
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                throw new LuggageTrackerBizContextException("Failed to update luggage", ex)
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                };
+            }
+        }
+
+        public async Task AddPassenger(Passenger passenger)
+        {
+            try
+            {
+                Validator.ValidatePassengerOrThrowException(passenger, newPassenger: true);
+                await DAL.AddPassenger(passenger);
+            }
+            catch (Exception ex)
+            {
+                throw new LuggageTrackerBizContextException("Failed to add passenger", ex)
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                };
+            }
+        }
+
+
+        public async Task UpdatePassenger(Passenger passenger)
+        {
+            try
+            {
+                Validator.ValidatePassengerOrThrowException(passenger);
+                await DAL.UpdatePassenger(passenger);
+            }
+            catch (Exception ex)
+            {
+                throw new LuggageTrackerBizContextException("Failed to update passenger", ex)
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                };
+            }
+        }
+
+        public async Task<Luggage> GetLuggage(string tagId)
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(tagId))
+                {
+                    throw new ArgumentNullException("Invalid TagId");
+                }
+
+                return await DAL.GetLuggage(tagId);
+            }
+            catch (Exception ex)
+            {
+                throw new LuggageTrackerBizContextException("Failed to get luggage with TagId", ex)
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                };
+            }
+        }
+
+        public async Task<List<Luggage>> GetLuggages(UInt64 passengerId)
+        {
+            try
+            {
+                return await DAL.GetLuggages(passengerId);
+            }
+            catch (Exception ex)
+            {
+                throw new LuggageTrackerBizContextException("Failed to get luggages with PassengerId", ex)
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                };
+            }
+        }
+
+        public async Task<Passenger> GetPassenger(UInt64 passengerId)
+        {
+            try
+            {
+                return await DAL.GetPassenger(passengerId);
+            }
+            catch (Exception ex)
+            {
+                throw new LuggageTrackerBizContextException("Failed to get passenger with PassengerId", ex)
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                };
+            }
+        }
+
+        public async Task<List<Passenger>> GetPassengers(string pnr)
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(pnr))
+                {
+                    throw new ArgumentNullException("Invalid pnr");
+                }
+
+                return await DAL.GetPassengers(pnr);
+            }
+            catch (Exception ex)
+            {
+                throw new LuggageTrackerBizContextException("Failed to get passengers with PNR", ex)
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                };
             }
         }
 

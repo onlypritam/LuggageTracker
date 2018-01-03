@@ -1,5 +1,4 @@
-﻿using DAL.Exceptions;
-using LuggageTracker.Common;
+﻿using LuggageTracker.Common;
 using LuggageTracker.Model;
 using System;
 using System.Collections.Generic;
@@ -52,8 +51,15 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                Validator.ValidatePassengerOrThrowException(passenger);
+                Validator.ValidatePassengerOrThrowException(passenger, newPassenger: true);
 
+                if (passenger.PassengerId == null)
+                {
+                    Random rnd = new Random();
+                    passenger.PassengerId = (UInt64)rnd.Next(1, int.MaxValue);
+                }
+
+                
                 await Task.Run(() => Passengers.Add(passenger));
             }
             catch
