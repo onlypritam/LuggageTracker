@@ -1,19 +1,20 @@
 ﻿using LuggageTracker.Common;
 using LuggageTracker.Model;
-using LuggageTrackerBL.Exceptions;
+using LuggageTracker.Exceptions;
 using LugggeTracker.DAL;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using LuggageTracker.BL;
 
-namespace LuggageTrackerBL.BizContext
+namespace LuggageTracker.BizContext
 {
     /// <summary>
     /// For now this layer is not doing much in addition to the DAL. But I am just keeping a provision to add functionality in the future.
     /// </summary>
 
-    class LuggageTrackerBizContext
+    public class LuggageTrackerBizContext : IBL
     {
         private IDAL DAL = null;
 

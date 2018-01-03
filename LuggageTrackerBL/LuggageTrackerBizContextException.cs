@@ -1,10 +1,10 @@
-﻿namespace LuggageTrackerBL.Exceptions
+﻿namespace LuggageTracker.Exceptions
 {
     using System;
     using System.Net;
 
     [Serializable]
-    class LuggageTrackerBizContextException : Exception
+    public class LuggageTrackerBizContextException : Exception
     {
         public HttpStatusCode StatusCode { get; set; }
 

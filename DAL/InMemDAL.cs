@@ -9,6 +9,9 @@ namespace LugggeTracker.DAL
 {
     public class InMemDAL : IDAL
     {
+        /// <summary>
+        /// Currently this inMem clas is very close to mock class, so we will use this to do the mock tests for BLL layers.
+        /// </summary>
         List<Luggage> Luggages = new List<Luggage>();
         List<Passenger> Passengers = new List<Passenger>();
 
