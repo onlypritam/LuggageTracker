@@ -34,9 +34,6 @@ namespace LuggageTrackerWebRole.Controllers
             try
             {
 
-                //string message = await Request.Body.ReadAsync();
-                //var httpContent = Request.Body.
-
                 //await BizContext.AddPassenger();
                 using (var requestBodyStream = new MemoryStream())
                 {
@@ -46,10 +43,12 @@ namespace LuggageTrackerWebRole.Controllers
                     string message = await new StreamReader(requestBodyStream).ReadToEndAsync();
                 }
 
+                return new HttpResponseMessage();
+
             }
             catch
             {
-
+                throw;
             }
 
         }
