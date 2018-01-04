@@ -23,6 +23,8 @@ namespace LuggageTracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Add(new ServiceDescriptor(typeof(IDAL), typeof(InMemDAL), ServiceLifetime.Transient));
+            services.Add(new ServiceDescriptor(typeof(IBL), typeof(LuggageTrackerBizContext), ServiceLifetime.Transient));
             services.AddMvc();
         }
 
