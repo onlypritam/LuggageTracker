@@ -1,15 +1,13 @@
-﻿using LuggageTracker.Common;
-using LuggageTracker.Model;
-using LuggageTracker.Exceptions;
-using LugggeTracker.DAL;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-using LuggageTracker.BL;
-
-namespace LuggageTracker.BizContext
+﻿namespace LuggageTracker.BL
 {
+    using LuggageTracker.Common;
+    using LuggageTracker.Model;
+    using LugggeTracker.DAL;
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// For now this layer is not doing much in addition to the DAL. But I am just keeping a provision to add functionality in the future.
     /// </summary>

@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuggageTracker", "LuggageTracker\LuggageTracker.csproj", "{35B5BE9C-234F-4C7F-B1C8-0C92144EBED2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{FD0D7009-798D-4265-8B1B-E573D3CD0B20}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuggageTracker.UnitTest", "LuggageTracker.UnitTest\LuggageTracker.UnitTest.csproj", "{C981D68B-691F-4FB8-91E0-D210B6822939}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{83F88C57-4A1A-4976-84B5-D4E3EED9EB9A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{D8D1D7B5-345E-4BDD-AF8A-9CAB977496B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuggageTrackerBL", "LuggageTrackerBL\LuggageTrackerBL.csproj", "{A0C1EC35-8738-4136-9FE0-8A07AB245C13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuggageTrackerBL", "LuggageTrackerBL\LuggageTrackerBL.csproj", "{A0C1EC35-8738-4136-9FE0-8A07AB245C13}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuggageTrackerDAL", "LuggageTrackerDAL\LuggageTrackerDAL.csproj", "{219E1AC5-68B4-42D7-A7D9-157D49F36276}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuggageTrackerWebRole", "LuggageTrackerWebRole\LuggageTrackerWebRole.csproj", "{BFFCBBDF-1BC6-43F1-8976-A8E193B613CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,14 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{35B5BE9C-234F-4C7F-B1C8-0C92144EBED2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{35B5BE9C-234F-4C7F-B1C8-0C92144EBED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{35B5BE9C-234F-4C7F-B1C8-0C92144EBED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{35B5BE9C-234F-4C7F-B1C8-0C92144EBED2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD0D7009-798D-4265-8B1B-E573D3CD0B20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD0D7009-798D-4265-8B1B-E573D3CD0B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD0D7009-798D-4265-8B1B-E573D3CD0B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD0D7009-798D-4265-8B1B-E573D3CD0B20}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C981D68B-691F-4FB8-91E0-D210B6822939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C981D68B-691F-4FB8-91E0-D210B6822939}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C981D68B-691F-4FB8-91E0-D210B6822939}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +37,14 @@ Global
 		{A0C1EC35-8738-4136-9FE0-8A07AB245C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0C1EC35-8738-4136-9FE0-8A07AB245C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0C1EC35-8738-4136-9FE0-8A07AB245C13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{219E1AC5-68B4-42D7-A7D9-157D49F36276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{219E1AC5-68B4-42D7-A7D9-157D49F36276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{219E1AC5-68B4-42D7-A7D9-157D49F36276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{219E1AC5-68B4-42D7-A7D9-157D49F36276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFFCBBDF-1BC6-43F1-8976-A8E193B613CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFFCBBDF-1BC6-43F1-8976-A8E193B613CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFFCBBDF-1BC6-43F1-8976-A8E193B613CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFFCBBDF-1BC6-43F1-8976-A8E193B613CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

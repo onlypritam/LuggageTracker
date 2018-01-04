@@ -1,10 +1,10 @@
-﻿using LuggageTracker.Model;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace LuggageTracker.BL
+﻿namespace LuggageTracker.BL
 {
+    using LuggageTracker.Model;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public interface IBL
     {
         Task AddPassenger(Passenger passenger);

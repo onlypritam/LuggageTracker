@@ -1,4 +1,4 @@
-﻿namespace LuggageTracker.Exceptions
+﻿namespace LuggageTracker.BL
 {
     using System;
     using System.Net;

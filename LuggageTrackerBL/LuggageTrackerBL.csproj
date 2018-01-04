@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\DAL\DAL.csproj" />
+    <ProjectReference Include="..\LuggageTrackerDAL\LuggageTrackerDAL.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
   </ItemGroup>
 

@@ -1,15 +1,13 @@
-﻿using LuggageTracker.BizContext;
-using LuggageTracker.BL;
-using LuggageTracker.Exceptions;
-using LuggageTracker.Model;
-using LugggeTracker.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace LuggageTracker.UnitTest
+﻿namespace LuggageTracker.UnitTest
 {
+    using LuggageTracker.BL;
+    using LuggageTracker.Model;
+    using LugggeTracker.DAL;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     [TestClass]
     public class BLTests
     {
