@@ -43,6 +43,10 @@
             try
             {
                 Validator.ValidateLuggageOrThrowException(luggage);
+                if(DAL.GetLuggage(luggage.LuggageId) == null)
+                {
+                    throw new ArgumentException("No such luggage to update");
+                }
                 await DAL.UpdateLuggage(luggage);
             }
             catch (Exception ex)
@@ -70,12 +74,16 @@
             }
         }
 
-
         public async Task UpdatePassenger(Passenger passenger)
         {
             try
             {
                 Validator.ValidatePassengerOrThrowException(passenger);
+
+                if (DAL.GetPassenger(passenger.PassengerId.GetValueOrDefault()) == null)
+                {
+                    throw new ArgumentException("No such passenger to update");
+                }
                 await DAL.UpdatePassenger(passenger);
             }
             catch (Exception ex)
