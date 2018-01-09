@@ -54,6 +54,8 @@ namespace LuggageTrackerWebRole.Controllers
             }
             catch (LuggageTrackerBizContextException ex)
             {
+
+
                 if (ex.InnerException is ArgumentException || ex.InnerException is ArgumentNullException)
                 {
                     return new HttpResponseMessage(HttpStatusCode.BadRequest);
@@ -62,6 +64,10 @@ namespace LuggageTrackerWebRole.Controllers
                 {
                     return new HttpResponseMessage(HttpStatusCode.InternalServerError);
                 }
+            }
+            catch (ArgumentException ex)
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             catch (Exception ex)
             {
@@ -105,6 +111,10 @@ namespace LuggageTrackerWebRole.Controllers
                     return new HttpResponseMessage(HttpStatusCode.InternalServerError);
                 }
             }
+            catch (ArgumentException ex)
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
             catch (Exception ex)
             {
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
@@ -147,6 +157,10 @@ namespace LuggageTrackerWebRole.Controllers
                     return new HttpResponseMessage(HttpStatusCode.InternalServerError);
                 }
             }
+            catch (ArgumentException ex)
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
             catch (Exception ex)
             {
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
@@ -188,6 +202,10 @@ namespace LuggageTrackerWebRole.Controllers
                 {
                     return new HttpResponseMessage(HttpStatusCode.InternalServerError);
                 }
+            }
+            catch (ArgumentException ex)
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             catch (Exception ex)
             {
