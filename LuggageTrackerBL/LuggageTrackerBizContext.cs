@@ -49,6 +49,13 @@
                 }
                 await DAL.UpdateLuggage(luggage);
             }
+            catch (ArgumentException aex)
+            {
+                throw new LuggageTrackerBizContextException("Invalid Argument", aex)
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                };
+            }
             catch (Exception ex)
             {
                 throw new LuggageTrackerBizContextException("Failed to update luggage", ex)
@@ -85,6 +92,13 @@
                     throw new ArgumentException("No such passenger to update");
                 }
                 await DAL.UpdatePassenger(passenger);
+            }
+            catch (ArgumentException aex)
+            {
+                throw new LuggageTrackerBizContextException("Invalid Argument", aex)
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                };
             }
             catch (Exception ex)
             {

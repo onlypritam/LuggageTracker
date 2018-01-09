@@ -87,6 +87,22 @@
         }
 
         [TestMethod]
+        [ExpectedException(typeof(LuggageTrackerBizContextException))]
+        public async Task ShouldFailToUpdateLuggageWithoutValidLuggageId()
+        {
+            Luggage luggage = new Luggage(Guid.NewGuid().ToString());
+            await BizContext.UpdateLuggage(luggage);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(LuggageTrackerBizContextException))]
+        public async Task ShouldFailToUpdatePassengerWithoutValidPassengerId()
+        {
+            Passenger passenger = new Passenger(99, "XXX", "FirstName", "LastName");
+            await BizContext.UpdatePassenger(passenger);
+        }
+
+        [TestMethod]
         public async Task ShouldUpdatePassengerSuccessfully()
         {
             UInt64 Id = 2;
@@ -171,7 +187,6 @@
 
             Assert.AreEqual(newPassengerList.Count, 2);
         }
-
 
         [TestMethod]
         [ExpectedException(typeof(LuggageTrackerBizContextException))]
