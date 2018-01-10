@@ -54,26 +54,16 @@ namespace LuggageTrackerWebRole.Controllers
             }
             catch (LuggageTrackerBizContextException ex)
             {
-
-
-                if (ex.InnerException is ArgumentException || ex.InnerException is ArgumentNullException)
-                {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
-                }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-                }
+                return new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
             }
             catch (ArgumentException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
             }
             catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
             }
-
         }
 
         [HttpPost]
@@ -102,24 +92,16 @@ namespace LuggageTrackerWebRole.Controllers
             }
             catch (LuggageTrackerBizContextException ex)
             {
-                if (ex.InnerException is ArgumentException || ex.InnerException is ArgumentNullException)
-                {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
-                }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-                }
+                return new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
             }
             catch (ArgumentException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
             }
             catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
             }
-
         }
 
         [HttpPost]
@@ -148,24 +130,16 @@ namespace LuggageTrackerWebRole.Controllers
             }
             catch (LuggageTrackerBizContextException ex)
             {
-                if (ex.InnerException is ArgumentException || ex.InnerException is ArgumentNullException)
-                {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
-                }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-                }
+                return new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
             }
             catch (ArgumentException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
             }
             catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
             }
-
         }
 
         [HttpPost]
@@ -194,26 +168,78 @@ namespace LuggageTrackerWebRole.Controllers
             }
             catch (LuggageTrackerBizContextException ex)
             {
-                if (ex.InnerException is ArgumentException || ex.InnerException is ArgumentNullException)
-                {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
-                }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-                }
+                return new HttpResponseMessage(ex.StatusCode) {Content = new StringContent(ex.Message)};
             }
             catch (ArgumentException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return new HttpResponseMessage(HttpStatusCode.BadRequest) {Content = new StringContent(ex.Message)};
             }
             catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
             }
+        }
+
+        [HttpPost]
+        [Route("")]
+        public async Task<HttpResponseMessage> GetLuggage(string tagId)
+        {
+            Luggage luggage;
+
+            try
+            {
+               luggage = await BizContext.GetLuggage(tagId);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(JsonConvert.SerializeObject(luggage), System.Text.Encoding.UTF8, "application/json") };
 
         }
 
+        [HttpPost]
+        [Route("")]
+        public async Task<List<Luggage>> GetLuggages()
+        {
+            try
+            {
 
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
+        [Route("")]
+        public async Task<Passenger> GetPassenger()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
+        [Route("")]
+        public async Task<List<Passenger>> GetPassengers()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }

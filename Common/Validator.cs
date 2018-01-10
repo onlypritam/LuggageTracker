@@ -9,7 +9,7 @@ namespace LuggageTracker.Common
         {
             if (passenger is null)
             {
-                throw new ArgumentNullException("Passenger cannot be null");
+                throw new ArgumentNullException("Passenger", "Passenger cannot be null");
             }
 
             if (!newPassenger &&  passenger.PassengerId == null)
@@ -37,7 +37,7 @@ namespace LuggageTracker.Common
         {
             if (luggage is null)
             {
-                throw new ArgumentNullException("Luggage cannnot be null");
+                throw new ArgumentNullException("Luggage","Luggage cannnot be null");
             }
 
             if (string.IsNullOrWhiteSpace(luggage.LuggageId))

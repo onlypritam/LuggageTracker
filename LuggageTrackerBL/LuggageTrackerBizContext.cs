@@ -49,9 +49,9 @@
                 }
                 await DAL.UpdateLuggage(luggage);
             }
-            catch (ArgumentException aex)
+            catch (ArgumentException ex)
             {
-                throw new LuggageTrackerBizContextException("Invalid Argument", aex)
+                throw new LuggageTrackerBizContextException("Invalid Argument", ex)
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                 };
@@ -93,9 +93,9 @@
                 }
                 await DAL.UpdatePassenger(passenger);
             }
-            catch (ArgumentException aex)
+            catch (ArgumentException ex)
             {
-                throw new LuggageTrackerBizContextException("Invalid Argument", aex)
+                throw new LuggageTrackerBizContextException("Invalid Argument", ex)
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                 };
@@ -115,7 +115,7 @@
             {
                 if (String.IsNullOrWhiteSpace(tagId))
                 {
-                    throw new ArgumentNullException("Invalid TagId");
+                    throw new ArgumentNullException("Tag Id", "Invalid TagId");
                 }
 
                 return await DAL.GetLuggage(tagId);
@@ -165,7 +165,7 @@
             {
                 if (String.IsNullOrWhiteSpace(pnr))
                 {
-                    throw new ArgumentNullException("Invalid pnr");
+                    throw new ArgumentNullException("pnr", "Invalid pnr");
                 }
 
                 return await DAL.GetPassengers(pnr);
