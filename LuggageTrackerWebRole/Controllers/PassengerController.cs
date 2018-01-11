@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using LuggageTracker.BL;
-using LuggageTracker.Common;
-using LuggageTracker.Model;
-using LugggeTracker.DAL;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-
-namespace LuggageTrackerWebRole.Controllers
+﻿namespace LuggageTrackerWebRole.Controllers
 {
+    using LuggageTracker.BL;
+    using LuggageTracker.Common;
+    using LuggageTracker.Model;
+    using LugggeTracker.DAL;
+    using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+
     [Produces("application/json")]
-    [Route("LuggageTracker/Passenger")]
+    [Route("taggageservice/v1")]
     public class PassengerController : Controller
     {
         private IDAL DataContext;
@@ -29,7 +27,7 @@ namespace LuggageTrackerWebRole.Controllers
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("passenger")]
         public async Task<HttpResponseMessage> AddPassenger()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -49,25 +47,27 @@ namespace LuggageTrackerWebRole.Controllers
                 Validator.ValidatePassengerOrThrowException(passenger, newPassenger: true);
 
                 await BizContext.AddPassenger(passenger);
+                response = new HttpResponseMessage(HttpStatusCode.Created) { Content = new StringContent("Passenger added successfully") };
 
-                return response;
             }
             catch (LuggageTrackerBizContextException ex)
             {
-                return new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
+                response = new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
             }
             catch (ArgumentException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
             }
             catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
+                response = new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(ex.Message) };
             }
+
+            return response;
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("luggage")]
         public async Task<HttpResponseMessage> AddLuggage()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -87,25 +87,26 @@ namespace LuggageTrackerWebRole.Controllers
                 Validator.ValidateLuggageOrThrowException(luggage);
 
                 await BizContext.AddLuggage(luggage);
-
-                return response;
+                response = new HttpResponseMessage(HttpStatusCode.Created) { Content = new StringContent("Luggage added successfully") };
             }
             catch (LuggageTrackerBizContextException ex)
             {
-                return new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
+                response = new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
             }
             catch (ArgumentException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
             }
             catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
+                response = new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(ex.Message) };
             }
+
+            return response;
         }
 
-        [HttpPost]
-        [Route("")]
+        [HttpPut]
+        [Route("passenger")]
         public async Task<HttpResponseMessage> UpdatePassenger()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -125,25 +126,26 @@ namespace LuggageTrackerWebRole.Controllers
                 Validator.ValidatePassengerOrThrowException(passenger, newPassenger: false);
 
                 await BizContext.UpdatePassenger(passenger);
-
-                return response;
+                response = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("Passenger updated successfully") };
             }
             catch (LuggageTrackerBizContextException ex)
             {
-                return new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
+                response = new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
             }
             catch (ArgumentException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
             }
             catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
+                response = new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(ex.Message) };
             }
+
+            return response;
         }
 
-        [HttpPost]
-        [Route("")]
+        [HttpPut]
+        [Route("luggage")]
         public async Task<HttpResponseMessage> UpdateLuggage()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -163,83 +165,126 @@ namespace LuggageTrackerWebRole.Controllers
                 Validator.ValidateLuggageOrThrowException(luggage);
 
                 await BizContext.UpdateLuggage(luggage);
-
-                return response;
+                response = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("Luggage updated successfully") };
             }
             catch (LuggageTrackerBizContextException ex)
             {
-                return new HttpResponseMessage(ex.StatusCode) {Content = new StringContent(ex.Message)};
+                response = new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
             }
             catch (ArgumentException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest) {Content = new StringContent(ex.Message)};
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
             }
             catch (Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
+                response = new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(ex.Message) };
             }
+
+            return response;
         }
 
-        [HttpPost]
-        [Route("")]
+        [HttpGet]
+        [Route("luggage/{tagId}")]
         public async Task<HttpResponseMessage> GetLuggage(string tagId)
         {
-            Luggage luggage;
+            Luggage luggage = null;
+
+            if (string.IsNullOrWhiteSpace(tagId))
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("tagId is required") };
+            }
 
             try
             {
                luggage = await BizContext.GetLuggage(tagId);
 
             }
+            catch (LuggageTrackerBizContextException ex)
+            {
+                return new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
+            }
             catch (Exception ex)
             {
-
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(ex.Message) };
             }
 
             return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(JsonConvert.SerializeObject(luggage), System.Text.Encoding.UTF8, "application/json") };
-
         }
 
-        [HttpPost]
-        [Route("")]
-        public async Task<List<Luggage>> GetLuggages()
+        [HttpGet]
+        [Route("luggages/{passengerId}")]
+        public async Task<HttpResponseMessage> GetLuggages(UInt64 passengerId)
         {
+            List<Luggage> luggages = null;
+
             try
             {
+                luggages = await BizContext.GetLuggages(passengerId);
 
+            }
+            catch (LuggageTrackerBizContextException ex)
+            {
+                return new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
             }
             catch (Exception ex)
             {
-
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(ex.Message) };
             }
+
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(JsonConvert.SerializeObject(luggages), System.Text.Encoding.UTF8, "application/json") };
         }
 
-        [HttpPost]
-        [Route("")]
-        public async Task<Passenger> GetPassenger()
+        [HttpGet]
+        [Route("passenger/{passengerId}")]
+        public async Task<HttpResponseMessage> GetPassenger(UInt64 passengerId)
         {
+            Passenger passenger = null;
+
             try
             {
+                passenger = await BizContext.GetPassenger(passengerId);
 
+            }
+            catch (LuggageTrackerBizContextException ex)
+            {
+                return new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
             }
             catch (Exception ex)
             {
-
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(ex.Message) };
             }
+
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(JsonConvert.SerializeObject(passenger), System.Text.Encoding.UTF8, "application/json") };
+
         }
 
-        [HttpPost]
-        [Route("")]
-        public async Task<List<Passenger>> GetPassengers()
+        [HttpGet]
+        [Route("passengers/{pnr}")]
+        public async Task<HttpResponseMessage> GetPassengers(string pnr)
         {
+            List<Passenger> passengers = null;
+
+            if (string.IsNullOrWhiteSpace(pnr))
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("pnr is required") };
+            }
+
             try
             {
+                passengers = await BizContext.GetPassengers(pnr);
 
+            }
+            catch (LuggageTrackerBizContextException ex)
+            {
+                return new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
             }
             catch (Exception ex)
             {
-
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(ex.Message) };
             }
+
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(JsonConvert.SerializeObject(passengers), System.Text.Encoding.UTF8, "application/json") };
+
         }
     }
 }

@@ -118,7 +118,21 @@
                     throw new ArgumentNullException("Tag Id", "Invalid TagId");
                 }
 
-                return await DAL.GetLuggage(tagId);
+                Luggage luggage = await DAL.GetLuggage(tagId);
+
+                if (luggage is null)
+                {
+                    throw new NullReferenceException("null object was returned for this parameter");
+                }
+
+                return luggage;
+            }
+            catch (NullReferenceException ex)
+            {
+                throw new LuggageTrackerBizContextException("Failed to get luggage with TagId", ex)
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                };
             }
             catch (Exception ex)
             {
@@ -133,7 +147,21 @@
         {
             try
             {
-                return await DAL.GetLuggages(passengerId);
+                List<Luggage> luggages = await DAL.GetLuggages(passengerId);
+
+                if(luggages is null || luggages.Count < 1)
+                {
+                    throw new NullReferenceException("null object was returned for this parameter");
+                }
+
+                return luggages;
+            }
+            catch (NullReferenceException ex)
+            {
+                throw new LuggageTrackerBizContextException("Failed to get luggages with PassengerId", ex)
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                };
             }
             catch (Exception ex)
             {
@@ -148,7 +176,21 @@
         {
             try
             {
-                return await DAL.GetPassenger(passengerId);
+                Passenger passenger = await DAL.GetPassenger(passengerId);
+
+                if (passenger is null)
+                {
+                    throw new NullReferenceException("null object was returned for this parameter");
+                }
+
+                return passenger;
+            }
+            catch (NullReferenceException ex)
+            {
+                throw new LuggageTrackerBizContextException("Failed to get passenger with PassengerId", ex)
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                };
             }
             catch (Exception ex)
             {
@@ -168,7 +210,21 @@
                     throw new ArgumentNullException("pnr", "Invalid pnr");
                 }
 
-                return await DAL.GetPassengers(pnr);
+                List<Passenger> passengers = await DAL.GetPassengers(pnr);
+
+                if (passengers is null || passengers.Count < 1)
+                {
+                    throw new NullReferenceException("null object was returned for this parameter");
+                }
+
+                return passengers;
+            }
+            catch (NullReferenceException ex)
+            {
+                throw new LuggageTrackerBizContextException("Failed to get passenger with PNR", ex)
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                };
             }
             catch (Exception ex)
             {

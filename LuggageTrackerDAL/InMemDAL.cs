@@ -107,7 +107,7 @@ namespace LugggeTracker.DAL
                     throw new ArgumentNullException("Invalid TagId");
                 }
                 
-                Luggage luggage = await Task.Run(() => Luggages.Single(e => e.LuggageId == tagId));
+                Luggage luggage = await Task.Run(() => Luggages.SingleOrDefault(e => e.LuggageId == tagId));
                 return luggage;
             }
             catch
@@ -120,7 +120,7 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                List<Luggage> luggages = await Task.Run(() => Passengers.Single(e => e.PassengerId == passengerId).Luggages);
+                List<Luggage> luggages = await Task.Run(() => Passengers.SingleOrDefault(e => e.PassengerId == passengerId).Luggages);
 
                 return luggages;
             }
@@ -134,7 +134,7 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                Passenger  passenger = await Task.Run(() =>  Passengers.Single(e => e.PassengerId == passengerId));
+                Passenger  passenger = await Task.Run(() =>  Passengers.SingleOrDefault(e => e.PassengerId == passengerId));
                 return passenger;
             }
             catch
