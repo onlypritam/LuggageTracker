@@ -15,6 +15,8 @@
 
         Task UpdateLuggage(Luggage luggage);
 
+        Task UpdateLuggageStatus(string luggageId, string luggageStatus);
+
         Task<Luggage> GetLuggage(string tagId);
 
         Task<List<Luggage>> GetLuggages(UInt64 passengerId);

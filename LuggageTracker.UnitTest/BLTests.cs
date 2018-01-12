@@ -87,6 +87,34 @@
         }
 
         [TestMethod]
+        public async Task ShouldUpdateLuggageStatusSuccessfully()
+        {
+            string tag = Guid.NewGuid().ToString();
+            string newStatus = "Registered";
+            luggage.LuggageId = tag;
+            luggage.Status = LuggageStatus.CheckedIn;
+            await BizContext.AddLuggage(luggage);
+
+            await BizContext.UpdateLuggageStatus(tag, newStatus);
+
+            Luggage updatedLuggage = await BizContext.GetLuggage(tag);
+            Assert.AreEqual(tag, updatedLuggage.LuggageId);
+            Assert.AreEqual(LuggageStatus.Registered, updatedLuggage.Status);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(LuggageTrackerBizContextException))]
+        public async Task ShouldFailToUpdateLuggageStatusWithoutValidStatus()
+        {
+            string tag = Guid.NewGuid().ToString();
+            string newStatus = "New";
+            luggage.LuggageId = tag;
+            luggage.Status = LuggageStatus.CheckedIn;
+            await BizContext.AddLuggage(luggage);
+            await BizContext.UpdateLuggageStatus(tag, newStatus);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(LuggageTrackerBizContextException))]
         public async Task ShouldFailToUpdateLuggageWithoutValidLuggageId()
         {

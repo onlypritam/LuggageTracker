@@ -65,6 +65,40 @@
             }
         }
 
+        public async Task UpdateLuggageStatus(string luggageId, string luggageStatus)
+        {
+            try
+            {
+                Luggage luggage = await DAL.GetLuggage(luggageId);
+                LuggageStatus status = (LuggageStatus) Enum.Parse(typeof(LuggageStatus), luggageStatus, true);
+
+                if (luggage == null)
+                {
+                    throw new ArgumentException("No such luggage to update");
+                }
+                else
+                {
+                    luggage.Status = status;
+                    luggage.LastStatusChange = DateTime.Now;
+                    DAL.UpdateLuggage(luggage);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                throw new LuggageTrackerBizContextException("Invalid Argument", ex)
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new LuggageTrackerBizContextException("Failed to update luggage status", ex)
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                };
+            }
+        }
+
         public async Task AddPassenger(Passenger passenger)
         {
             try

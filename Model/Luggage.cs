@@ -28,6 +28,7 @@ namespace LuggageTracker.Model
 
     public enum LuggageStatus
     {
+        Registered,
         CheckedIn,
         BoardedOnFlight
     }

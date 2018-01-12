@@ -183,6 +183,34 @@
             return response;
         }
 
+
+        [HttpPut]
+        [Route("luggage/{luggageId}/{status}")]
+        public async Task<HttpResponseMessage> UpdateLuggageStatus(string luggageId, string status)
+        {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+
+            try
+            {
+                await BizContext.UpdateLuggageStatus(luggageId,status);
+                response = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("Luggage status updated successfully") };
+            }
+            catch (LuggageTrackerBizContextException ex)
+            {
+                response = new HttpResponseMessage(ex.StatusCode) { Content = new StringContent(ex.Message) };
+            }
+            catch (ArgumentException ex)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(ex.Message) };
+            }
+            catch (Exception ex)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(ex.Message) };
+            }
+
+            return response;
+        }
+
         [HttpGet]
         [Route("luggage/{tagId}")]
         public async Task<HttpResponseMessage> GetLuggage(string tagId)
