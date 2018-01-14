@@ -16,6 +16,29 @@
         Luggage luggage = null;
         Passenger passenger = null;
 
+        UInt64 passengerId = 6969;
+        string passengerFirstName = "TestFirstName";
+        string passengerMiddleName = "TestMiddleName";
+        string passengerLastName = "TestLastName";
+        string pnr = Guid.NewGuid().ToString();
+        string flightNo = "TestFlightNo";
+        string seatNo = "TestSeatNo";
+        string address = "TestAddress";
+        string phone = "TestPhone";
+        string email = "TestEmail";
+        string remarks = "TestRremarks";
+        bool subscribed = true;
+        List<Luggage> luggages = new List<Luggage> { new Luggage(Guid.NewGuid().ToString()) };
+
+
+        string luggageId = Guid.NewGuid().ToString();
+        string name = "Test luggage name";
+        string weight = "Test luggage weight";
+        string measurement = "Test luggage measurement";
+        string description = "Test luggage description";
+        LuggageStatus status = LuggageStatus.Registered;
+        DateTime lastStatusChange = DateTime.Now;
+
         [TestInitialize]
         public void Initialize()
         {
@@ -23,9 +46,28 @@
 
             BizContext = new LuggageTrackerBizContext(DALContext);
 
-            luggage = new Luggage(Guid.NewGuid().ToString()); //TODO tests with all Luggage properties
+            luggage = new Luggage(luggageId)
+            {
+                Name = name,
+                Weight = weight,
+                Measurement = measurement,
+                Description = description,
+                Status = status,
+                LastStatusChange = lastStatusChange,
+            };
 
-            passenger = new Passenger(1, Guid.NewGuid().ToString(), "TestFirstName", "TestLastName"); //TODO tests with all pasenger properties
+            passenger = new Passenger(passengerId, pnr, passengerFirstName, passengerLastName)
+            {
+                PassengerMiddleName = passengerMiddleName,
+                FlightNumber = flightNo,
+                SeatNumber = seatNo,
+                Address = address,
+                Phone = phone,
+                EMail = email,
+                Remarks = remarks,
+                Subscribed = subscribed,
+                Luggages = luggages,
+            };
         }
 
         [TestMethod]
@@ -37,19 +79,15 @@
 
             Luggage newLuggage = await BizContext.GetLuggage(tag);
             Assert.AreEqual(tag, newLuggage.LuggageId);
+
+            Assert.AreEqual(weight, newLuggage.Weight);
+            Assert.AreEqual(measurement, newLuggage.Measurement);
+            Assert.AreEqual(name, newLuggage.Name);
+            Assert.AreEqual(description, newLuggage.Description);
+            Assert.AreEqual(status, newLuggage.Status);
+            Assert.AreEqual(lastStatusChange, newLuggage.LastStatusChange);
         }
-
-        [TestMethod]
-        public async Task ShouldAddPassengerSuccessfully()
-        {
-            UInt64 Id = 1;
-            passenger.PassengerId = Id;
-            await BizContext.AddPassenger(passenger);
-
-            Passenger newPassenger = await BizContext.GetPassenger(Id);
-            Assert.AreEqual(newPassenger.PassengerId, Id);
-        }
-
+               
         [TestMethod]
         public async Task ShouldUpdateLuggageSuccessfully()
         {
@@ -64,6 +102,7 @@
             string weight = "1 KG";
             string name = "TestName";
             string measurement = "1 Meters";
+            LuggageStatus status = LuggageStatus.BoardedOnFlight;
             DateTime lastStatusChange = DateTime.Now;
 
 
@@ -72,7 +111,7 @@
             newLuggage.Name = name;
             newLuggage.Measurement = measurement;
             newLuggage.LastStatusChange = lastStatusChange;
-            newLuggage.Status = LuggageStatus.CheckedIn;
+            newLuggage.Status = status;
 
 
             await BizContext.UpdateLuggage(newLuggage);
@@ -83,7 +122,7 @@
             Assert.AreEqual(name, updatedLuggage.Name);
             Assert.AreEqual(measurement, updatedLuggage.Measurement);
             Assert.AreEqual(lastStatusChange, updatedLuggage.LastStatusChange);
-            Assert.AreEqual(LuggageStatus.CheckedIn, updatedLuggage.Status);
+            Assert.AreEqual(status, updatedLuggage.Status);
         }
 
         [TestMethod]
@@ -124,10 +163,34 @@
 
         [TestMethod]
         [ExpectedException(typeof(LuggageTrackerBizContextException))]
-        public async Task ShouldFailToUpdatePassengerWithoutValidPassengerId()
+        public async Task ShouldFailToAddNullLuggage()
         {
-            Passenger passenger = new Passenger(99, "XXX", "FirstName", "LastName");
-            await BizContext.UpdatePassenger(passenger);
+            await BizContext.AddLuggage(null);
+        }
+
+
+
+        [TestMethod]
+        public async Task ShouldAddPassengerSuccessfully()
+        {
+            UInt64 Id = 1;
+            passenger.PassengerId = Id;
+            await BizContext.AddPassenger(passenger);
+
+            Passenger newPassenger = await BizContext.GetPassenger(Id);
+            Assert.AreEqual(newPassenger.PassengerId, Id);
+
+            Assert.AreEqual(newPassenger.PassengerFirstName, passengerFirstName);
+            Assert.AreEqual(newPassenger.PassengerMiddleName, passengerMiddleName);
+            Assert.AreEqual(newPassenger.PassengerLastName, passengerLastName);
+            Assert.AreEqual(newPassenger.PNR, pnr);
+            Assert.AreEqual(newPassenger.SeatNumber, seatNo);
+            Assert.AreEqual(newPassenger.FlightNumber, flightNo);
+            Assert.AreEqual(newPassenger.Address, address);
+            Assert.AreEqual(newPassenger.EMail, email);
+            Assert.AreEqual(newPassenger.Phone, phone);
+            Assert.AreEqual(newPassenger.Remarks, remarks);
+            Assert.AreEqual(newPassenger.Subscribed, subscribed);
         }
 
         [TestMethod]
@@ -218,13 +281,6 @@
 
         [TestMethod]
         [ExpectedException(typeof(LuggageTrackerBizContextException))]
-        public async Task ShouldFailToAddNullLuggage()
-        {
-            await BizContext.AddLuggage(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(LuggageTrackerBizContextException))]
         public async Task ShouldFailToAddNullPassenger()
         {
             await BizContext.AddPassenger(null);
@@ -276,6 +332,14 @@
         {
             passenger.PassengerLastName = null;
             await BizContext.AddPassenger(passenger);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(LuggageTrackerBizContextException))]
+        public async Task ShouldFailToUpdatePassengerWithoutValidPassengerId()
+        {
+            Passenger passenger = new Passenger(99, "XXX", "FirstName", "LastName");
+            await BizContext.UpdatePassenger(passenger);
         }
 
     }

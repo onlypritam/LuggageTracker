@@ -4,6 +4,8 @@
     using LuggageTracker.Model;
     using LuggageTrackerWebRole.Controllers;
     using LugggeTracker.DAL;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Newtonsoft.Json;
     using System;
@@ -65,11 +67,19 @@
         [TestMethod]
         public async Task ShouldAddPassengerSuccessfully()
         {
+            controller.ControllerContext = new ControllerContext();
 
-            controller.Request = new HttpRequestMessage()
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(passenger))
-            };
+            //controller.AddPassenger(passenger);
+            //controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            //controller.ControllerContext.HttpContext.Request  = new HttpRequestMessage()
+            //{
+            //    Content = new StringContent(JsonConvert.SerializeObject(passenger))
+            //};
+
+            //controller.Request = new HttpRequestMessage()
+            //{
+            //    Content = new StringContent(JsonConvert.SerializeObject(passenger))
+            //};
 
         }
     }

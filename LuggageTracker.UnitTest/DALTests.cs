@@ -15,14 +15,56 @@ namespace LuggageTracker.UnitTest
         Luggage luggage = null;
         Passenger passenger = null;
 
+        UInt64 passengerId = 6969;
+        string passengerFirstName = "TestFirstName";
+        string passengerMiddleName = "TestMiddleName";
+        string passengerLastName = "TestLastName";
+        string pnr = Guid.NewGuid().ToString();
+        string flightNo = "TestFlightNo";
+        string seatNo = "TestSeatNo";
+        string address = "TestAddress";
+        string phone = "TestPhone";
+        string email = "TestEmail";
+        string remarks = "TestRremarks";
+        bool subscribed = true;
+        List<Luggage> luggages = new List<Luggage> { new Luggage(Guid.NewGuid().ToString()) };
+
+
+        string luggageId = Guid.NewGuid().ToString();
+        string name = "Test luggage name";
+        string weight = "Test luggage weight";
+        string measurement = "Test luggage measurement";
+        string description = "Test luggage description";
+        LuggageStatus status = LuggageStatus.Registered;
+        DateTime lastStatusChange = DateTime.Now;
+
         [TestInitialize]
         public void Initialize()
         {
             DALContext = new InMemDAL();
 
-            luggage = new Luggage(Guid.NewGuid().ToString()); //TODO tests with all luggage properties
+            luggage = new Luggage(luggageId)
+            {
+                Name = name,
+                Weight = weight,
+                Measurement = measurement,
+                Description = description,
+                Status = status,
+                LastStatusChange = lastStatusChange,
+            };
 
-            passenger = new Passenger(1, Guid.NewGuid().ToString(), "TestFirstName", "TestLastName"); //TODO tests with all pasenger properties
+            passenger = new Passenger(passengerId, pnr, passengerFirstName, passengerLastName)
+            {
+                PassengerMiddleName = passengerMiddleName,
+                FlightNumber = flightNo,
+                SeatNumber = seatNo,
+                Address = address,
+                Phone = phone,
+                EMail = email,
+                Remarks = remarks,
+                Subscribed = subscribed,
+                Luggages = luggages,
+            };
         }
 
         [TestMethod]
@@ -34,6 +76,13 @@ namespace LuggageTracker.UnitTest
 
             Luggage newLuggage = await DALContext.GetLuggage(tag);
             Assert.AreEqual(tag, newLuggage.LuggageId);
+
+            Assert.AreEqual(weight, newLuggage.Weight);
+            Assert.AreEqual(measurement, newLuggage.Measurement);
+            Assert.AreEqual(name, newLuggage.Name);
+            Assert.AreEqual(description, newLuggage.Description);
+            Assert.AreEqual(status, newLuggage.Status);
+            Assert.AreEqual(lastStatusChange, newLuggage.LastStatusChange);
         }
 
         [TestMethod]
@@ -45,6 +94,18 @@ namespace LuggageTracker.UnitTest
 
             Passenger newPassenger = await DALContext.GetPassenger(Id);
             Assert.AreEqual(newPassenger.PassengerId, Id);
+
+            Assert.AreEqual(newPassenger.PassengerFirstName, passengerFirstName);
+            Assert.AreEqual(newPassenger.PassengerMiddleName, passengerMiddleName);
+            Assert.AreEqual(newPassenger.PassengerLastName, passengerLastName);
+            Assert.AreEqual(newPassenger.PNR, pnr);
+            Assert.AreEqual(newPassenger.SeatNumber, seatNo);
+            Assert.AreEqual(newPassenger.FlightNumber, flightNo);
+            Assert.AreEqual(newPassenger.Address, address);
+            Assert.AreEqual(newPassenger.EMail, email);
+            Assert.AreEqual(newPassenger.Phone, phone);
+            Assert.AreEqual(newPassenger.Remarks, remarks);
+            Assert.AreEqual(newPassenger.Subscribed, subscribed);
         }
 
         [TestMethod]

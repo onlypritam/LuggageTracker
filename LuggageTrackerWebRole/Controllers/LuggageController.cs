@@ -15,7 +15,7 @@
 
 
     [Produces("application/json")]
-    [Route("api/Luggage")]
+    [Route("taggageservice/v1/luggage")]
     public class LuggageController : Controller
     {
         private IDAL DataContext;
@@ -28,7 +28,6 @@
         }
 
         [HttpPost]
-        [Route("luggage")]
         public async Task<HttpResponseMessage> AddLuggage()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -67,7 +66,6 @@
         }
 
         [HttpPut]
-        [Route("luggage")]
         public async Task<HttpResponseMessage> UpdateLuggage()
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -106,7 +104,7 @@
         }
 
         [HttpPut]
-        [Route("luggage/{luggageId}/{status}")]
+        [Route("{luggageId}/{status}")]
         public async Task<HttpResponseMessage> UpdateLuggageStatus(string luggageId, string status)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -133,7 +131,7 @@
         }
 
         [HttpGet]
-        [Route("luggage/{tagId}")]
+        [Route("{tagId}")]
         public async Task<HttpResponseMessage> GetLuggage(string tagId)
         {
             Luggage luggage = null;
@@ -161,7 +159,7 @@
         }
 
         [HttpGet]
-        [Route("luggages/{passengerId}")]
+        [Route("{passengerId}")]
         public async Task<HttpResponseMessage> GetLuggages(UInt64 passengerId)
         {
             List<Luggage> luggages = null;
