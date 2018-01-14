@@ -103,7 +103,7 @@
         {
             try
             {
-                Validator.ValidatePassengerOrThrowException(passenger, newPassenger: true);
+                Validator.ValidatePassengerOrThrowException(passenger, isNewPassenger: true);
                 await DAL.AddPassenger(passenger);
             }
             catch (Exception ex)

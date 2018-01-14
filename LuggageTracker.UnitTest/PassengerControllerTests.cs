@@ -43,10 +43,7 @@
         public void Initialize()
         {
             DALContext = new InMemDAL();
-
             BizContext = new LuggageTrackerBizContext(DALContext);
-
-            //luggage = new Luggage(Guid.NewGuid().ToString());
 
             passenger = new Passenger(passengerId, pnr, passengerFirstName, passengerLastName)
             {
@@ -68,9 +65,10 @@
         public async Task ShouldAddPassengerSuccessfully()
         {
             controller.ControllerContext = new ControllerContext();
+            await controller.AddPassenger(passenger);
 
             //controller.AddPassenger(passenger);
-            //controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            //controller.Co  ntrollerContext.HttpContext = new DefaultHttpContext();
             //controller.ControllerContext.HttpContext.Request  = new HttpRequestMessage()
             //{
             //    Content = new StringContent(JsonConvert.SerializeObject(passenger))

@@ -5,14 +5,14 @@ namespace LuggageTracker.Common
 {
     public static class Validator
     {
-        public static void ValidatePassengerOrThrowException(Passenger passenger, bool newPassenger = false)
+        public static void ValidatePassengerOrThrowException(Passenger passenger, bool isNewPassenger = false)
         {
             if (passenger is null)
             {
                 throw new ArgumentNullException("Passenger", "Passenger cannot be null");
             }
 
-            if (!newPassenger &&  passenger.PassengerId == null)
+            if (!isNewPassenger &&  passenger.PassengerId == null)
             {
                 throw new ArgumentException("PassengerId cannot be less than 1");
             }

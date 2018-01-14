@@ -27,23 +27,23 @@
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> AddPassenger()
+        public async Task<HttpResponseMessage> AddPassenger([FromBody] Passenger passenger)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            Passenger passenger = null;
-            string json;
+           // Passenger passenger = null;
+            //string json;
 
             try
             {
-                using (MemoryStream requestBodyStream = new MemoryStream())
-                {
-                    await Request.Body.CopyToAsync(requestBodyStream);
-                    requestBodyStream.Seek(0, SeekOrigin.Begin);
-                    json = await new StreamReader(requestBodyStream).ReadToEndAsync();
-                }
+                //using (MemoryStream requestBodyStream = new MemoryStream())
+                //{
+                //    await Request.Body.CopyToAsync(requestBodyStream);
+                //    requestBodyStream.Seek(0, SeekOrigin.Begin);
+                //    json = await new StreamReader(requestBodyStream).ReadToEndAsync();
+                //}
 
-                passenger = JsonConvert.DeserializeObject<Passenger>(json);
-                Validator.ValidatePassengerOrThrowException(passenger, newPassenger: true);
+                //passenger = JsonConvert.DeserializeObject<Passenger>(json);
+                Validator.ValidatePassengerOrThrowException(passenger, isNewPassenger: true);
 
                 await BizContext.AddPassenger(passenger);
                 response = new HttpResponseMessage(HttpStatusCode.Created) { Content = new StringContent("Passenger added successfully") };
@@ -66,23 +66,23 @@
         }
 
         [HttpPut]
-        public async Task<HttpResponseMessage> UpdatePassenger()
+        public async Task<HttpResponseMessage> UpdatePassenger([FromBody] Passenger passenger)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            Passenger passenger = null;
-            string json;
+            //Passenger passenger = null;
+            //string json;
 
             try
             {
-                using (MemoryStream requestBodyStream = new MemoryStream())
-                {
-                    await Request.Body.CopyToAsync(requestBodyStream);
-                    requestBodyStream.Seek(0, SeekOrigin.Begin);
-                    json = await new StreamReader(requestBodyStream).ReadToEndAsync();
-                }
+                //using (MemoryStream requestBodyStream = new MemoryStream())
+                //{
+                //    await Request.Body.CopyToAsync(requestBodyStream);
+                //    requestBodyStream.Seek(0, SeekOrigin.Begin);
+                //    json = await new StreamReader(requestBodyStream).ReadToEndAsync();
+                //}
 
-                passenger = JsonConvert.DeserializeObject<Passenger>(json);
-                Validator.ValidatePassengerOrThrowException(passenger, newPassenger: false);
+                //passenger = JsonConvert.DeserializeObject<Passenger>(json);
+                Validator.ValidatePassengerOrThrowException(passenger, isNewPassenger: false);
 
                 await BizContext.UpdatePassenger(passenger);
                 response = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("Passenger updated successfully") };

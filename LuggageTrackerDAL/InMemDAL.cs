@@ -54,7 +54,7 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                Validator.ValidatePassengerOrThrowException(passenger, newPassenger: true);
+                Validator.ValidatePassengerOrThrowException(passenger, isNewPassenger: true);
 
                 if (passenger.PassengerId == null)
                 {
