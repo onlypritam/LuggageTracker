@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LuggageTrackerBL\LuggageTrackerBL.csproj" />
     <ProjectReference Include="..\LuggageTrackerDAL\LuggageTrackerDAL.csproj" />
+    <ProjectReference Include="..\LuggageTrackerWebRole\LuggageTrackerWebRole.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
   </ItemGroup>
 

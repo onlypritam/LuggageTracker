@@ -20,9 +20,9 @@ namespace LuggageTracker.UnitTest
         {
             DALContext = new InMemDAL();
 
-            luggage = new Luggage(Guid.NewGuid().ToString());
+            luggage = new Luggage(Guid.NewGuid().ToString()); //TODO tests with all luggage properties
 
-            passenger = new Passenger(1, Guid.NewGuid().ToString(), "TestFirstName", "TestLastName");
+            passenger = new Passenger(1, Guid.NewGuid().ToString(), "TestFirstName", "TestLastName"); //TODO tests with all pasenger properties
         }
 
         [TestMethod]
