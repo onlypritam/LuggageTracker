@@ -31,19 +31,9 @@
         public async Task<HttpResponseMessage> AddLuggage([FromBody] Luggage luggage)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            //Luggage luggage = null;
-            //string json;
 
             try
             {
-                //using (MemoryStream requestBodyStream = new MemoryStream())
-                //{
-                //    await Request.Body.CopyToAsync(requestBodyStream);
-                //    requestBodyStream.Seek(0, SeekOrigin.Begin);
-                //    json = await new StreamReader(requestBodyStream).ReadToEndAsync();
-                //}
-
-                //luggage = JsonConvert.DeserializeObject<Luggage>(json);
                 Validator.ValidateLuggageOrThrowException(luggage);
 
                 await BizContext.AddLuggage(luggage);
@@ -69,19 +59,9 @@
         public async Task<HttpResponseMessage> UpdateLuggage([FromBody] Luggage luggage)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            //Luggage luggage = null;
-            //string json;
 
             try
             {
-                //using (MemoryStream requestBodyStream = new MemoryStream())
-                //{
-                //    await Request.Body.CopyToAsync(requestBodyStream);
-                //    requestBodyStream.Seek(0, SeekOrigin.Begin);
-                //    json = await new StreamReader(requestBodyStream).ReadToEndAsync();
-                //}
-
-                //luggage = JsonConvert.DeserializeObject<Luggage>(json);
                 Validator.ValidateLuggageOrThrowException(luggage);
 
                 await BizContext.UpdateLuggage(luggage);
