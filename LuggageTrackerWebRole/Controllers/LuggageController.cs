@@ -18,12 +18,10 @@
     [Route("taggageservice/v1/luggage")]
     public class LuggageController : Controller
     {
-        private IDAL DataContext;
         private IBL BizContext;
 
-        public LuggageController(IDAL dataContext, IBL bizContext)
+        public LuggageController(IBL bizContext)
         {
-            this.DataContext = dataContext;
             this.BizContext = bizContext;
         }
 
