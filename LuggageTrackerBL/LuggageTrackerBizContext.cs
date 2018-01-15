@@ -80,7 +80,7 @@
                 {
                     luggage.Status = status;
                     luggage.LastStatusChange = DateTime.Now;
-                    DAL.UpdateLuggage(luggage);
+                    await DAL.UpdateLuggage(luggage);
                 }
             }
             catch (ArgumentException ex)

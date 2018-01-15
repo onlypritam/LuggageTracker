@@ -17,12 +17,10 @@
     [Route("taggageservice/v1/passenger")]
     public class PassengerController : Controller
     {
-        private IDAL DataContext;
         private IBL BizContext;
 
-        public PassengerController(IDAL dataContext, IBL bizContext)
+        public PassengerController(IBL bizContext)
         {
-            this.DataContext = dataContext;
             this.BizContext = bizContext;
         }
 
@@ -30,19 +28,9 @@
         public async Task<HttpResponseMessage> AddPassenger([FromBody] Passenger passenger)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-           // Passenger passenger = null;
-            //string json;
 
             try
             {
-                //using (MemoryStream requestBodyStream = new MemoryStream())
-                //{
-                //    await Request.Body.CopyToAsync(requestBodyStream);
-                //    requestBodyStream.Seek(0, SeekOrigin.Begin);
-                //    json = await new StreamReader(requestBodyStream).ReadToEndAsync();
-                //}
-
-                //passenger = JsonConvert.DeserializeObject<Passenger>(json);
                 Validator.ValidatePassengerOrThrowException(passenger, isNewPassenger: true);
 
                 await BizContext.AddPassenger(passenger);
@@ -69,19 +57,9 @@
         public async Task<HttpResponseMessage> UpdatePassenger([FromBody] Passenger passenger)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            //Passenger passenger = null;
-            //string json;
 
             try
             {
-                //using (MemoryStream requestBodyStream = new MemoryStream())
-                //{
-                //    await Request.Body.CopyToAsync(requestBodyStream);
-                //    requestBodyStream.Seek(0, SeekOrigin.Begin);
-                //    json = await new StreamReader(requestBodyStream).ReadToEndAsync();
-                //}
-
-                //passenger = JsonConvert.DeserializeObject<Passenger>(json);
                 Validator.ValidatePassengerOrThrowException(passenger, isNewPassenger: false);
 
                 await BizContext.UpdatePassenger(passenger);

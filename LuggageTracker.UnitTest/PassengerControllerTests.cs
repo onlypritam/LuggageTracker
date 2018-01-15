@@ -10,15 +10,14 @@
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
 
     [TestClass]
     public class PassengerControllerTests
     {
-        IDAL DALContext;
         IBL BizContext;
-        Luggage luggage = null;
         Passenger passenger = null;
         PassengerController controller;
 
@@ -42,8 +41,7 @@
         [TestInitialize]
         public void Initialize()
         {
-            DALContext = new InMemDAL();
-            BizContext = new LuggageTrackerBizContext(DALContext);
+            BizContext = new LuggageTrackerBizContext(new InMemDAL());
 
             passenger = new Passenger(passengerId, pnr, passengerFirstName, passengerLastName)
             {
@@ -58,26 +56,39 @@
                 Luggages = luggages,
             };
 
-            controller = new PassengerController(DALContext, BizContext);
+            controller = new PassengerController(BizContext);
         }
 
         [TestMethod]
         public async Task ShouldAddPassengerSuccessfully()
         {
             controller.ControllerContext = new ControllerContext();
-            await controller.AddPassenger(passenger);
+            HttpResponseMessage createResult = await controller.AddPassenger(passenger);
+                        
+            Assert.AreEqual(createResult.StatusCode, HttpStatusCode.Created,"Verify passenger created");
 
-            //controller.AddPassenger(passenger);
-            //controller.Co  ntrollerContext.HttpContext = new DefaultHttpContext();
-            //controller.ControllerContext.HttpContext.Request  = new HttpRequestMessage()
-            //{
-            //    Content = new StringContent(JsonConvert.SerializeObject(passenger))
-            //};
+            HttpResponseMessage getResult = await controller.GetPassenger(passengerId);
 
-            //controller.Request = new HttpRequestMessage()
-            //{
-            //    Content = new StringContent(JsonConvert.SerializeObject(passenger))
-            //};
+            Assert.AreEqual(getResult.StatusCode, HttpStatusCode.OK, "verify passenger get");
+
+            string json = await getResult.Content.ReadAsStringAsync();
+
+            Passenger newPassenger = JsonConvert.DeserializeObject<Passenger>(json);
+
+            Assert.AreEqual(newPassenger.PassengerId, passengerId);
+
+            Assert.AreEqual(newPassenger.PassengerFirstName, passengerFirstName);
+            Assert.AreEqual(newPassenger.PassengerMiddleName, passengerMiddleName);
+            Assert.AreEqual(newPassenger.PassengerLastName, passengerLastName);
+            Assert.AreEqual(newPassenger.PNR, pnr);
+            Assert.AreEqual(newPassenger.SeatNumber, seatNo);
+            Assert.AreEqual(newPassenger.FlightNumber, flightNo);
+            Assert.AreEqual(newPassenger.Address, address);
+            Assert.AreEqual(newPassenger.EMail, email);
+            Assert.AreEqual(newPassenger.Phone, phone);
+            Assert.AreEqual(newPassenger.Remarks, remarks);
+            Assert.AreEqual(newPassenger.Subscribed, subscribed);
+
 
         }
     }
