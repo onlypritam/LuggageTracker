@@ -122,6 +122,33 @@
         }
 
         [TestMethod]
+        public async Task ShouldUpdateLuggageStatusSuccessfully()
+        {
+            string luggageStringStatus = "Registered";
+            
+            luggage.LuggageId = luggageId;
+            HttpResponseMessage createResult = await luggageController.AddLuggage(luggage);
+            Assert.AreEqual(createResult.StatusCode, HttpStatusCode.Created, "Verify luggage created");
+
+            luggage.Status = luggageStatus;
+
+            luggageController.ControllerContext = new ControllerContext();
+            HttpResponseMessage updatedResult = await luggageController.UpdateLuggageStatus(luggageId, luggageStringStatus);
+
+            Assert.AreEqual(updatedResult.StatusCode, HttpStatusCode.OK, "Verify luggage modified");
+
+            HttpResponseMessage getResult = await luggageController.GetLuggage(luggageId);
+
+            Assert.AreEqual(getResult.StatusCode, HttpStatusCode.OK, "verify luggage get");
+
+            string json = await getResult.Content.ReadAsStringAsync();
+
+            Luggage newLuggage = JsonConvert.DeserializeObject<Luggage>(json);
+
+            Assert.AreEqual(newLuggage.Status, LuggageStatus.Registered);
+        }
+
+        [TestMethod]
         public async Task ShouldGetAllLuggageForPassengerIdSuccessfully()
         {
             luggageController.ControllerContext = new ControllerContext();
