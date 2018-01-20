@@ -4,9 +4,10 @@ using System.Text;
 
 namespace LuggageTracker.Model
 {
+    [Serializable]
     public class Passenger
     {
-        public UInt64? PassengerId { get; set; }
+        public UInt64? PassengerId { get; set; } //Unique
 
         public string PNR { get; set; }
 

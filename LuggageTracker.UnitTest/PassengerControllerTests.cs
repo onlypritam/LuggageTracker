@@ -34,7 +34,7 @@
         string email = "TestEmail";
         string remarks = "TestRremarks";
         bool subscribed = true;
-        List<Luggage> luggages = new List<Luggage> { new Luggage(Guid.NewGuid().ToString()) };
+        List<Luggage> luggages = new List<Luggage> { new Luggage(Guid.NewGuid().ToString(),"LuggageName") };
 
 
 
@@ -106,7 +106,7 @@
             email = "Updated_TestEmail";
             remarks = "Updated_TestRremarks";
             subscribed = false;
-            luggages.Add(new Luggage(Guid.NewGuid().ToString()));
+            luggages.Add(new Luggage(Guid.NewGuid().ToString(), "LuggageName"));
 
             passenger.PassengerId = passengerId;
             HttpResponseMessage createResult = await passengerController.AddPassenger(passenger);

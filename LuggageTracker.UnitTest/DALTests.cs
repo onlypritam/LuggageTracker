@@ -27,7 +27,7 @@ namespace LuggageTracker.UnitTest
         string email = "TestEmail";
         string remarks = "TestRremarks";
         bool subscribed = true;
-        List<Luggage> luggages = new List<Luggage> { new Luggage(Guid.NewGuid().ToString()) };
+        List<Luggage> luggages = new List<Luggage> { new Luggage(Guid.NewGuid().ToString(), "LuggageName") };
 
 
         string luggageId = Guid.NewGuid().ToString();
@@ -43,7 +43,7 @@ namespace LuggageTracker.UnitTest
         {
             DALContext = new InMemDAL();
 
-            luggage = new Luggage(luggageId)
+            luggage = new Luggage(luggageId,name)
             {
                 Name = name,
                 Weight = weight,
@@ -67,6 +67,7 @@ namespace LuggageTracker.UnitTest
             };
         }
 
+    #region LuggageTests
         [TestMethod]
         public async Task ShouldAddLuggageSuccessfully()
         {
@@ -85,6 +86,103 @@ namespace LuggageTracker.UnitTest
             Assert.AreEqual(lastStatusChange, newLuggage.LastStatusChange);
         }
 
+        [TestMethod]
+        public async Task ShouldUpdateLuggageSuccessfully()
+        {
+            string tag = Guid.NewGuid().ToString();
+            luggage.LuggageId = tag;
+            await DALContext.AddLuggage(luggage);
+
+            Luggage newLuggage = await DALContext.GetLuggage(tag);
+            Assert.AreEqual(tag, newLuggage.LuggageId);
+
+            string description = "TestLuggage";
+            string weight = "1 KG";
+            string name = "TestName";
+            string measurement = "1 Meters";
+            DateTime lastStatusChange = DateTime.Now;
+
+
+            newLuggage.Description = description;
+            newLuggage.Weight = weight;
+            newLuggage.Name = name;
+            newLuggage.Measurement = measurement;
+            newLuggage.LastStatusChange = lastStatusChange;
+            newLuggage.Status = LuggageStatus.CheckedIn;
+
+
+            await DALContext.UpdateLuggage(newLuggage);
+            Luggage updatedLuggage = await DALContext.GetLuggage(tag);
+            Assert.AreEqual(tag, updatedLuggage.LuggageId);
+            Assert.AreEqual(description, updatedLuggage.Description);
+            Assert.AreEqual(weight, updatedLuggage.Weight);
+            Assert.AreEqual(name, updatedLuggage.Name);
+            Assert.AreEqual(measurement, updatedLuggage.Measurement);
+            Assert.AreEqual(lastStatusChange, updatedLuggage.LastStatusChange);
+            Assert.AreEqual(LuggageStatus.CheckedIn, updatedLuggage.Status);
+        }
+
+        [TestMethod]
+        public async Task ShouldGetRightNoOfLuggages()
+        {
+            UInt64 Id = 3;
+            passenger.PassengerId = Id;
+            await DALContext.AddPassenger(passenger);
+
+            Passenger newPassenger = await DALContext.GetPassenger(Id);
+
+            List<Luggage> luggages = new List<Luggage>();
+            luggages.Add(new Luggage(Guid.NewGuid().ToString(), "LuggageName"));
+            luggages.Add(new Luggage(Guid.NewGuid().ToString(), "LuggageName"));
+
+            newPassenger.Luggages = luggages;
+            Assert.AreEqual(newPassenger.Luggages.Count, 2);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public async Task ShouldFailToAddNullLuggage()
+        {
+            await DALContext.AddLuggage(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task ShouldFailToAddLuggageWithBlankName()
+        {
+            await DALContext.AddLuggage(new Luggage("TestId",""));
+        }
+
+        [TestMethod]
+        public async Task ShouldAddBlankLuggageIdLuggage()
+        {
+            luggage.LuggageId = "";
+            await DALContext.AddLuggage(luggage);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task ShouldFailToUpdateLuggageWithBlankName()
+        {
+            await DALContext.UpdateLuggage(new Luggage("TestId", ""));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public async Task ShouldFailToUpdateNullLuggage()
+        {
+            await DALContext.UpdateLuggage(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task ShouldFailToUpdateBlankLuggageIdLuggage()
+        {
+            await DALContext.UpdateLuggage(new Luggage("", "LuggageName"));
+        }
+        #endregion
+
+    #region PassengerTest
         [TestMethod]
         public async Task ShouldAddPassengerSuccessfully()
         {
@@ -106,13 +204,6 @@ namespace LuggageTracker.UnitTest
             Assert.AreEqual(newPassenger.Phone, phone);
             Assert.AreEqual(newPassenger.Remarks, remarks);
             Assert.AreEqual(newPassenger.Subscribed, subscribed);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public async Task ShouldFailToAddNullLuggage()
-        {
-            await DALContext.AddLuggage(null);
         }
 
         [TestMethod]
@@ -169,43 +260,7 @@ namespace LuggageTracker.UnitTest
             passenger.PassengerLastName = null;
             await DALContext.AddPassenger(passenger);
         }
-
-        [TestMethod]
-        public async Task ShouldUpdateLuggageSuccessfully()
-        {
-            string tag = Guid.NewGuid().ToString();
-            luggage.LuggageId = tag;
-            await DALContext.AddLuggage(luggage);
-
-            Luggage newLuggage = await DALContext.GetLuggage(tag);
-            Assert.AreEqual(tag, newLuggage.LuggageId);
-
-            string description = "TestLuggage";
-            string weight = "1 KG";
-            string name = "TestName";
-            string measurement = "1 Meters";
-            DateTime lastStatusChange = DateTime.Now;
-
-
-            newLuggage.Description = description;
-            newLuggage.Weight = weight;
-            newLuggage.Name = name;
-            newLuggage.Measurement = measurement;
-            newLuggage.LastStatusChange = lastStatusChange;
-            newLuggage.Status = LuggageStatus.CheckedIn;
-
-
-            await DALContext.UpdateLuggage(newLuggage);
-            Luggage updatedLuggage = await DALContext.GetLuggage(tag);
-            Assert.AreEqual(tag, updatedLuggage.LuggageId);
-            Assert.AreEqual(description, updatedLuggage.Description);
-            Assert.AreEqual(weight, updatedLuggage.Weight);
-            Assert.AreEqual(name, updatedLuggage.Name);
-            Assert.AreEqual(measurement, updatedLuggage.Measurement);
-            Assert.AreEqual(lastStatusChange, updatedLuggage.LastStatusChange);
-            Assert.AreEqual(LuggageStatus.CheckedIn, updatedLuggage.Status);
-        }
-
+      
         [TestMethod]
         public async Task ShouldUpdatePassengerSuccessfully()
         {
@@ -241,8 +296,8 @@ namespace LuggageTracker.UnitTest
             newPassenger.Subscribed = subscribed;
 
             List<Luggage> luggages = new List<Luggage>();
-            luggages.Add(new Luggage(Guid.NewGuid().ToString()));
-            luggages.Add(new Luggage(Guid.NewGuid().ToString()));
+            luggages.Add(new Luggage(Guid.NewGuid().ToString(), "LuggageName"));
+            luggages.Add(new Luggage(Guid.NewGuid().ToString(), "LuggageName"));
 
             newPassenger.Luggages = luggages;
 
@@ -264,23 +319,6 @@ namespace LuggageTracker.UnitTest
         }
 
         [TestMethod]
-        public async Task ShouldGetRightNoOfLuggages()
-        {
-            UInt64 Id = 3;
-            passenger.PassengerId = Id;
-            await DALContext.AddPassenger(passenger);
-
-            Passenger newPassenger = await DALContext.GetPassenger(Id);
-
-            List<Luggage> luggages = new List<Luggage>();
-            luggages.Add(new Luggage(Guid.NewGuid().ToString()));
-            luggages.Add(new Luggage(Guid.NewGuid().ToString()));
-
-            newPassenger.Luggages = luggages;
-            Assert.AreEqual(newPassenger.Luggages.Count, 2);
-        }
-
-        [TestMethod]
         public async Task ShouldGetRightNoOfPassengers()
         {
             string pnr = "TEST";
@@ -291,6 +329,7 @@ namespace LuggageTracker.UnitTest
 
             Assert.AreEqual(newPassengerList.Count, 2);
         }
+    #endregion
 
     }
 }

@@ -19,7 +19,7 @@ namespace LugggeTracker.DAL
         {
             try
             {
-                Validator.ValidateLuggageOrThrowException(luggage);
+                Validator.ValidateLuggageOrThrowException(luggage, true);
 
                 await Task.Run(() => Luggages.Add(luggage));
             }

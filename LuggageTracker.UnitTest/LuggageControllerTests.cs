@@ -37,9 +37,8 @@
         {
             BizContext = new LuggageTrackerBizContext(new InMemDAL());
 
-            luggage = new Luggage(luggageId)
+            luggage = new Luggage(luggageId,name)
             {
-                Name = name,
                 Weight = weight,
                 Measurement = measurement,
                 Description = description,
@@ -157,7 +156,7 @@
             Assert.AreEqual(createResult.StatusCode, HttpStatusCode.Created, "Verify luggage created");
 
             string secondLuggageId = Guid.NewGuid().ToString();
-            Luggage luggage2 = new Luggage(secondLuggageId);
+            Luggage luggage2 = new Luggage(secondLuggageId, "LuggageName");
             HttpResponseMessage createResult2 = await luggageController.AddLuggage(luggage2);
             Assert.AreEqual(createResult2.StatusCode, HttpStatusCode.Created, "Verify 2nd luggage created");
 

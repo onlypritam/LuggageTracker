@@ -28,7 +28,7 @@
         string email = "TestEmail";
         string remarks = "TestRremarks";
         bool subscribed = true;
-        List<Luggage> luggages = new List<Luggage> { new Luggage(Guid.NewGuid().ToString()) };
+        List<Luggage> luggages = new List<Luggage> { new Luggage(Guid.NewGuid().ToString(), "LuggageName") };
 
 
         string luggageId = Guid.NewGuid().ToString();
@@ -46,9 +46,8 @@
 
             BizContext = new LuggageTrackerBizContext(DALContext);
 
-            luggage = new Luggage(luggageId)
+            luggage = new Luggage(luggageId,name)
             {
-                Name = name,
                 Weight = weight,
                 Measurement = measurement,
                 Description = description,
@@ -69,6 +68,8 @@
                 Luggages = luggages,
             };
         }
+
+    #region LuggageTests
 
         [TestMethod]
         public async Task ShouldAddLuggageSuccessfully()
@@ -140,6 +141,23 @@
             Assert.AreEqual(tag, updatedLuggage.LuggageId);
             Assert.AreEqual(LuggageStatus.Registered, updatedLuggage.Status);
         }
+        
+        [TestMethod]
+        public async Task ShouldGetRightNoOfLuggagesUsingPassengerId()
+        {
+            UInt64 Id = 3;
+            passenger.PassengerId = Id;
+            await BizContext.AddPassenger(passenger);
+
+            Passenger newPassenger = await BizContext.GetPassenger(Id);
+
+            List<Luggage> luggages = new List<Luggage>();
+            luggages.Add(new Luggage(Guid.NewGuid().ToString(), "LuggageName"));
+            luggages.Add(new Luggage(Guid.NewGuid().ToString(), "LuggageName"));
+
+            newPassenger.Luggages = luggages;
+            Assert.AreEqual(newPassenger.Luggages.Count, 2);
+        }
 
         [TestMethod]
         [ExpectedException(typeof(LuggageTrackerBizContextException))]
@@ -157,8 +175,36 @@
         [ExpectedException(typeof(LuggageTrackerBizContextException))]
         public async Task ShouldFailToUpdateLuggageWithoutValidLuggageId()
         {
-            Luggage luggage = new Luggage(Guid.NewGuid().ToString());
+            Luggage luggage = new Luggage(Guid.NewGuid().ToString(), "LuggageName");
             await BizContext.UpdateLuggage(luggage);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(LuggageTrackerBizContextException))]
+        public async Task ShouldFailToUpdateLuggageWithBlankName()
+        {
+            await BizContext.UpdateLuggage(new Luggage("TestId", ""));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(LuggageTrackerBizContextException))]
+        public async Task ShouldFailToAddLuggageWithBlankName()
+        {
+            await BizContext.AddLuggage(new Luggage("TestId", ""));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(LuggageTrackerBizContextException))]
+        public async Task ShouldFailToUpdateLuggageWithBlankLuggageId()
+        {
+            await BizContext.UpdateLuggage(new Luggage("", "LuggageName"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(LuggageTrackerBizContextException))]
+        public async Task ShouldAddLuggageWithBlankLuggageIdSuccessfully()
+        {
+            await BizContext.AddLuggage(new Luggage("", "LuggageName"));
         }
 
         [TestMethod]
@@ -168,8 +214,9 @@
             await BizContext.AddLuggage(null);
         }
 
+    #endregion
 
-
+    #region PassengerTests
         [TestMethod]
         public async Task ShouldAddPassengerSuccessfully()
         {
@@ -228,8 +275,8 @@
             newPassenger.Subscribed = subscribed;
 
             List<Luggage> luggages = new List<Luggage>();
-            luggages.Add(new Luggage(Guid.NewGuid().ToString()));
-            luggages.Add(new Luggage(Guid.NewGuid().ToString()));
+            luggages.Add(new Luggage(Guid.NewGuid().ToString(), "LuggageName"));
+            luggages.Add(new Luggage(Guid.NewGuid().ToString(), "LuggageName"));
 
             newPassenger.Luggages = luggages;
 
@@ -248,23 +295,6 @@
             Assert.AreEqual(remarks, updatedPassenger.Remarks);
             Assert.AreEqual(subscribed, updatedPassenger.Subscribed);
             Assert.AreEqual(2, updatedPassenger.Luggages.Count);
-        }
-
-        [TestMethod]
-        public async Task ShouldGetRightNoOfLuggages()
-        {
-            UInt64 Id = 3;
-            passenger.PassengerId = Id;
-            await BizContext.AddPassenger(passenger);
-
-            Passenger newPassenger = await BizContext.GetPassenger(Id);
-
-            List<Luggage> luggages = new List<Luggage>();
-            luggages.Add(new Luggage(Guid.NewGuid().ToString()));
-            luggages.Add(new Luggage(Guid.NewGuid().ToString()));
-
-            newPassenger.Luggages = luggages;
-            Assert.AreEqual(newPassenger.Luggages.Count, 2);
         }
 
         [TestMethod]
@@ -341,6 +371,8 @@
             Passenger passenger = new Passenger(99, "XXX", "FirstName", "LastName");
             await BizContext.UpdatePassenger(passenger);
         }
+
+    #endregion
 
     }
 }

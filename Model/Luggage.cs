@@ -2,10 +2,11 @@
 
 namespace LuggageTracker.Model
 {
+    [Serializable]
     public class Luggage
     {
 
-        public string LuggageId { get; set; }
+        public string LuggageId { get; set; } //Unique
 
         public string Name { get; set; }
 
@@ -19,9 +20,10 @@ namespace LuggageTracker.Model
 
         public DateTime LastStatusChange { get; set; }
 
-        public Luggage(string luggageId)
+        public Luggage(string luggageId, string name)
         {
             this.LuggageId = luggageId;
+            this.Name = name;
         }
 
     }

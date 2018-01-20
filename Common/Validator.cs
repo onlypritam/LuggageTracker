@@ -33,16 +33,21 @@ namespace LuggageTracker.Common
             }
         }
 
-        public static void ValidateLuggageOrThrowException(Luggage luggage)
+        public static void ValidateLuggageOrThrowException(Luggage luggage, bool isNewLuggage = false)
         {
             if (luggage is null)
             {
                 throw new ArgumentNullException("Luggage","Luggage cannnot be null");
             }
 
-            if (string.IsNullOrWhiteSpace(luggage.LuggageId))
+            if(string.IsNullOrWhiteSpace(luggage.Name))
             {
-                throw new ArgumentException("Invalid TagId");
+                throw new ArgumentException("Invalid Name");
+            }
+
+            if (!isNewLuggage && string.IsNullOrWhiteSpace(luggage.LuggageId))
+            {
+                throw new ArgumentException("Invalid LuggageId");
             }
         }
 
