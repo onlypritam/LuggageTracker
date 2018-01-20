@@ -19,7 +19,7 @@
     {
         IBL BizContext;
         Passenger passenger = null;
-        PassengerController controller;
+        PassengerController passengerController;
 
 
         UInt64 passengerId = 696969;
@@ -56,18 +56,18 @@
                 Luggages = luggages,
             };
 
-            controller = new PassengerController(BizContext);
+            passengerController = new PassengerController(BizContext);
         }
 
         [TestMethod]
         public async Task ShouldAddPassengerSuccessfully()
         {
-            controller.ControllerContext = new ControllerContext();
-            HttpResponseMessage createResult = await controller.AddPassenger(passenger);
+            passengerController.ControllerContext = new ControllerContext();
+            HttpResponseMessage createResult = await passengerController.AddPassenger(passenger);
                         
             Assert.AreEqual(createResult.StatusCode, HttpStatusCode.Created,"Verify passenger created");
 
-            HttpResponseMessage getResult = await controller.GetPassenger(passengerId);
+            HttpResponseMessage getResult = await passengerController.GetPassenger(passengerId);
 
             Assert.AreEqual(getResult.StatusCode, HttpStatusCode.OK, "verify passenger get");
 
@@ -109,7 +109,7 @@
             luggages.Add(new Luggage(Guid.NewGuid().ToString()));
 
             passenger.PassengerId = passengerId;
-            HttpResponseMessage createResult = await controller.AddPassenger(passenger);
+            HttpResponseMessage createResult = await passengerController.AddPassenger(passenger);
             Assert.AreEqual(createResult.StatusCode, HttpStatusCode.Created, "Verify passenger created");
 
 
@@ -126,12 +126,12 @@
             passenger.Subscribed = subscribed;
             passenger.Luggages = luggages;
 
-            controller.ControllerContext = new ControllerContext();
-            HttpResponseMessage updatedResult = await controller.UpdatePassenger(passenger);
+            passengerController.ControllerContext = new ControllerContext();
+            HttpResponseMessage updatedResult = await passengerController.UpdatePassenger(passenger);
 
             Assert.AreEqual(updatedResult.StatusCode, HttpStatusCode.OK, "Verify passenger modified");
 
-            HttpResponseMessage getResult = await controller.GetPassenger(passengerId);
+            HttpResponseMessage getResult = await passengerController.GetPassenger(passengerId);
 
             Assert.AreEqual(getResult.StatusCode, HttpStatusCode.OK, "verify passenger get");
 
@@ -158,9 +158,9 @@
         [TestMethod]
         public async Task ShouldGetAllPassengersForPNRSuccessfully()
         {
-            controller.ControllerContext = new ControllerContext();
+            passengerController.ControllerContext = new ControllerContext();
             passenger.PNR = pnr;
-            HttpResponseMessage createResult = await controller.AddPassenger(passenger);
+            HttpResponseMessage createResult = await passengerController.AddPassenger(passenger);
 
             Assert.AreEqual(createResult.StatusCode, HttpStatusCode.Created, "Verify passenger created");
             
@@ -168,11 +168,11 @@
             passengerFirstName = "Second_TestFirstName";
             passengerLastName = "Second_TestLastName";
             Passenger passenger2 = new Passenger(passengerId, pnr, passengerFirstName, passengerLastName);
-            HttpResponseMessage createResult2 = await controller.AddPassenger(passenger2);
+            HttpResponseMessage createResult2 = await passengerController.AddPassenger(passenger2);
 
             Assert.AreEqual(createResult2.StatusCode, HttpStatusCode.Created, "Verify 2nd passenger created");
 
-            HttpResponseMessage getResult = await controller.GetPassengers(pnr);
+            HttpResponseMessage getResult = await passengerController.GetPassengers(pnr);
 
             Assert.AreEqual(getResult.StatusCode, HttpStatusCode.OK, "verify passengers get for pnr");
 
