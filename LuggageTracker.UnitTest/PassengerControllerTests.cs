@@ -88,8 +88,101 @@
             Assert.AreEqual(newPassenger.Phone, phone);
             Assert.AreEqual(newPassenger.Remarks, remarks);
             Assert.AreEqual(newPassenger.Subscribed, subscribed);
-
-
+            Assert.AreEqual(newPassenger.Luggages.Count, 1);
         }
+
+        [TestMethod]
+        public async Task ShouldUpdatePassengerSuccessfully()
+        {
+            passengerId = 69696969;
+            passengerFirstName = "Updated_TestFirstName";
+            passengerMiddleName = "Updated_TestMiddleName";
+            passengerLastName = "Updated_TestLastName";
+            pnr = Guid.NewGuid().ToString();
+            flightNo = "Updated_TestFlightNo";
+            seatNo = "Updated_TestSeatNo";
+            address = "Updated_TestAddress";
+            phone = "Updated_TestPhone";
+            email = "Updated_TestEmail";
+            remarks = "Updated_TestRremarks";
+            subscribed = false;
+            luggages.Add(new Luggage(Guid.NewGuid().ToString()));
+
+            passenger.PassengerId = passengerId;
+            HttpResponseMessage createResult = await controller.AddPassenger(passenger);
+            Assert.AreEqual(createResult.StatusCode, HttpStatusCode.Created, "Verify passenger created");
+
+
+            passenger.PassengerFirstName = passengerFirstName;
+            passenger.PassengerLastName = passengerLastName;
+            passenger.PassengerMiddleName = passengerMiddleName;
+            passenger.PNR = pnr;
+            passenger.FlightNumber = flightNo;
+            passenger.SeatNumber = seatNo;
+            passenger.Address = address;
+            passenger.Phone = phone;
+            passenger.EMail = email;
+            passenger.Remarks = remarks;
+            passenger.Subscribed = subscribed;
+            passenger.Luggages = luggages;
+
+            controller.ControllerContext = new ControllerContext();
+            HttpResponseMessage updatedResult = await controller.UpdatePassenger(passenger);
+
+            Assert.AreEqual(updatedResult.StatusCode, HttpStatusCode.OK, "Verify passenger modified");
+
+            HttpResponseMessage getResult = await controller.GetPassenger(passengerId);
+
+            Assert.AreEqual(getResult.StatusCode, HttpStatusCode.OK, "verify passenger get");
+
+            string json = await getResult.Content.ReadAsStringAsync();
+
+            Passenger newPassenger = JsonConvert.DeserializeObject<Passenger>(json);
+
+            Assert.AreEqual(newPassenger.PassengerId, passengerId);
+
+            Assert.AreEqual(newPassenger.PassengerFirstName, passengerFirstName);
+            Assert.AreEqual(newPassenger.PassengerMiddleName, passengerMiddleName);
+            Assert.AreEqual(newPassenger.PassengerLastName, passengerLastName);
+            Assert.AreEqual(newPassenger.PNR, pnr);
+            Assert.AreEqual(newPassenger.SeatNumber, seatNo);
+            Assert.AreEqual(newPassenger.FlightNumber, flightNo);
+            Assert.AreEqual(newPassenger.Address, address);
+            Assert.AreEqual(newPassenger.EMail, email);
+            Assert.AreEqual(newPassenger.Phone, phone);
+            Assert.AreEqual(newPassenger.Remarks, remarks);
+            Assert.AreEqual(newPassenger.Subscribed, subscribed);
+            Assert.AreEqual(newPassenger.Luggages.Count, 2);
+        }
+
+        [TestMethod]
+        public async Task ShouldGetAllPassengersForPNRSuccessfully()
+        {
+            controller.ControllerContext = new ControllerContext();
+            passenger.PNR = pnr;
+            HttpResponseMessage createResult = await controller.AddPassenger(passenger);
+
+            Assert.AreEqual(createResult.StatusCode, HttpStatusCode.Created, "Verify passenger created");
+            
+            passengerId = 6969692;
+            passengerFirstName = "Second_TestFirstName";
+            passengerLastName = "Second_TestLastName";
+            Passenger passenger2 = new Passenger(passengerId, pnr, passengerFirstName, passengerLastName);
+            HttpResponseMessage createResult2 = await controller.AddPassenger(passenger2);
+
+            Assert.AreEqual(createResult2.StatusCode, HttpStatusCode.Created, "Verify 2nd passenger created");
+
+            HttpResponseMessage getResult = await controller.GetPassengers(pnr);
+
+            Assert.AreEqual(getResult.StatusCode, HttpStatusCode.OK, "verify passengers get for pnr");
+
+            string json = await getResult.Content.ReadAsStringAsync();
+
+            List<Passenger> allPassengers = JsonConvert.DeserializeObject<List<Passenger>>(json);
+
+            Assert.AreEqual(allPassengers.Count, 2);
+            Assert.AreEqual(allPassengers[0].PNR, allPassengers[1].PNR);
+        }
+
     }
 }
