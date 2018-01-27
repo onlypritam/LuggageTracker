@@ -35,7 +35,7 @@ namespace LuggageTracker.UnitTest
         string weight = "Test luggage weight";
         string measurement = "Test luggage measurement";
         string description = "Test luggage description";
-        LuggageStatus status = LuggageStatus.Registered;
+        LuggageStatusEnum status = LuggageStatusEnum.Registered;
         DateTime lastStatusChange = DateTime.Now;
 
         [TestInitialize]
@@ -108,7 +108,7 @@ namespace LuggageTracker.UnitTest
             newLuggage.Name = name;
             newLuggage.Measurement = measurement;
             newLuggage.LastStatusChange = lastStatusChange;
-            newLuggage.Status = LuggageStatus.CheckedIn;
+            newLuggage.Status = LuggageStatusEnum.CheckedIn;
 
 
             await DALContext.UpdateLuggage(newLuggage);
@@ -119,7 +119,7 @@ namespace LuggageTracker.UnitTest
             Assert.AreEqual(name, updatedLuggage.Name);
             Assert.AreEqual(measurement, updatedLuggage.Measurement);
             Assert.AreEqual(lastStatusChange, updatedLuggage.LastStatusChange);
-            Assert.AreEqual(LuggageStatus.CheckedIn, updatedLuggage.Status);
+            Assert.AreEqual(LuggageStatusEnum.CheckedIn, (object)updatedLuggage.Status);
         }
 
         [TestMethod]

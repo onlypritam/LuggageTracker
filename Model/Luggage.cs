@@ -16,7 +16,7 @@ namespace LuggageTracker.Model
 
         public string Description { get; set; }
 
-        public LuggageStatus Status { get; set; }
+        public LuggageStatusEnum Status { get; set; }
 
         public DateTime LastStatusChange { get; set; }
 
@@ -28,7 +28,7 @@ namespace LuggageTracker.Model
 
     }
 
-    public enum LuggageStatus
+    public enum LuggageStatusEnum
     {
         Registered,
         CheckedIn,

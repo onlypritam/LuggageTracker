@@ -70,7 +70,7 @@
             try
             {
                 Luggage luggage = await DAL.GetLuggage(luggageId);
-                LuggageStatus status = (LuggageStatus) Enum.Parse(typeof(LuggageStatus), luggageStatus, true);
+                LuggageStatusEnum status = (LuggageStatusEnum) Enum.Parse(typeof(LuggageStatusEnum), luggageStatus, true);
 
                 if (luggage == null)
                 {

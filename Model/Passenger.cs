@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LuggageTracker.Model
+﻿namespace LuggageTracker.Model
 {
+    using System;
+    using System.Collections.Generic;
+
     [Serializable]
     public class Passenger
     {

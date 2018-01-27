@@ -36,7 +36,7 @@
         string weight = "Test luggage weight";
         string measurement = "Test luggage measurement";
         string description = "Test luggage description";
-        LuggageStatus status = LuggageStatus.Registered;
+        LuggageStatusEnum status = LuggageStatusEnum.Registered;
         DateTime lastStatusChange = DateTime.Now;
 
         [TestInitialize]
@@ -103,7 +103,7 @@
             string weight = "1 KG";
             string name = "TestName";
             string measurement = "1 Meters";
-            LuggageStatus status = LuggageStatus.BoardedOnFlight;
+            LuggageStatusEnum status = LuggageStatusEnum.BoardedOnFlight;
             DateTime lastStatusChange = DateTime.Now;
 
 
@@ -132,14 +132,14 @@
             string tag = Guid.NewGuid().ToString();
             string newStatus = "Registered";
             luggage.LuggageId = tag;
-            luggage.Status = LuggageStatus.CheckedIn;
+            luggage.Status = LuggageStatusEnum.CheckedIn;
             await BizContext.AddLuggage(luggage);
 
             await BizContext.UpdateLuggageStatus(tag, newStatus);
 
             Luggage updatedLuggage = await BizContext.GetLuggage(tag);
             Assert.AreEqual(tag, updatedLuggage.LuggageId);
-            Assert.AreEqual(LuggageStatus.Registered, updatedLuggage.Status);
+            Assert.AreEqual(LuggageStatusEnum.Registered, (object)updatedLuggage.Status);
         }
         
         [TestMethod]
@@ -166,7 +166,7 @@
             string tag = Guid.NewGuid().ToString();
             string newStatus = "New";
             luggage.LuggageId = tag;
-            luggage.Status = LuggageStatus.CheckedIn;
+            luggage.Status = LuggageStatusEnum.CheckedIn;
             await BizContext.AddLuggage(luggage);
             await BizContext.UpdateLuggageStatus(tag, newStatus);
         }

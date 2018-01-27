@@ -28,7 +28,7 @@
         string weight = "Weight";
         string measurement = "Measurement";
         string description = "Description";
-        LuggageStatus luggageStatus = LuggageStatus.CheckedIn;
+        LuggageStatusEnum luggageStatus = LuggageStatusEnum.CheckedIn;
         DateTime lastStatusChange = DateTime.Now;
         
 
@@ -83,7 +83,7 @@
             weight = "Updates_Weight";
             measurement = "Updates_Measurement";
             description = "Updates_Description";
-            luggageStatus = LuggageStatus.Registered;
+            luggageStatus = LuggageStatusEnum.Registered;
             lastStatusChange = DateTime.Now;
 
             luggage.LuggageId = luggageId;
@@ -144,7 +144,7 @@
 
             Luggage newLuggage = JsonConvert.DeserializeObject<Luggage>(json);
 
-            Assert.AreEqual(newLuggage.Status, LuggageStatus.Registered);
+            Assert.AreEqual((object)newLuggage.Status, LuggageStatusEnum.Registered);
         }
 
         [TestMethod]
