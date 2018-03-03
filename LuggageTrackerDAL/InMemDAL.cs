@@ -50,6 +50,38 @@ namespace LugggeTracker.DAL
             }
         }
 
+        public async Task<Luggage> GetLuggage(string tagId)
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(tagId))
+                {
+                    throw new ArgumentNullException("Invalid TagId");
+                }
+
+                Luggage luggage = await Task.Run(() => Luggages.SingleOrDefault(e => e.LuggageId == tagId));
+                return luggage;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<Luggage>> GetLuggages(UInt64 passengerId)
+        {
+            try
+            {
+                List<Luggage> luggages = await Task.Run(() => Passengers.SingleOrDefault(e => e.PassengerId == passengerId).Luggages);
+
+                return luggages;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task AddPassenger(Passenger passenger)
         {
             try
@@ -91,38 +123,6 @@ namespace LugggeTracker.DAL
                 thisPassenger.Remarks = passenger.Remarks;
                 thisPassenger.Subscribed = passenger.Subscribed;
                 thisPassenger.Luggages = passenger.Luggages;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<Luggage> GetLuggage(string tagId)
-        {
-            try
-            {
-                if(String.IsNullOrWhiteSpace(tagId))
-                {
-                    throw new ArgumentNullException("Invalid TagId");
-                }
-                
-                Luggage luggage = await Task.Run(() => Luggages.SingleOrDefault(e => e.LuggageId == tagId));
-                return luggage;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public async Task<List<Luggage>> GetLuggages(UInt64 passengerId)
-        {
-            try
-            {
-                List<Luggage> luggages = await Task.Run(() => Passengers.SingleOrDefault(e => e.PassengerId == passengerId).Luggages);
-
-                return luggages;
             }
             catch
             {

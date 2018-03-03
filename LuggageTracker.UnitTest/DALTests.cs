@@ -15,6 +15,7 @@ namespace LuggageTracker.UnitTest
         Luggage luggage = null;
         Passenger passenger = null;
 
+        //Initial Passenger property values
         UInt64 passengerId = 6969;
         string passengerFirstName = "TestFirstName";
         string passengerMiddleName = "TestMiddleName";
@@ -29,7 +30,7 @@ namespace LuggageTracker.UnitTest
         bool subscribed = true;
         List<Luggage> luggages = new List<Luggage> { new Luggage(Guid.NewGuid().ToString(), "LuggageName") };
 
-
+        //Initial luggage property values
         string luggageId = Guid.NewGuid().ToString();
         string name = "Test luggage name";
         string weight = "Test luggage weight";
