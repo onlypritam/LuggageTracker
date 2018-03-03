@@ -83,7 +83,7 @@
 
         [HttpPut]
         [Route("{luggageId}/{status}")]
-        public async Task<HttpResponseMessage> UpdateLuggageStatus(string luggageId, string status)
+        public async Task<HttpResponseMessage> UpdateLuggageStatus(string luggageId, LuggageStatus status)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 

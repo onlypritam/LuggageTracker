@@ -14,6 +14,7 @@ namespace LuggageTracker.UnitTest
         IDAL DALContext;
         Luggage luggage = null;
         Passenger passenger = null;
+        LuggageStatus luggageStatus = null;
 
         //Initial Passenger property values
         UInt64 passengerId = 6969;
@@ -36,7 +37,17 @@ namespace LuggageTracker.UnitTest
         string weight = "Test luggage weight";
         string measurement = "Test luggage measurement";
         string description = "Test luggage description";
-        LuggageStatusEnum status = LuggageStatusEnum.Registered;
+        private LuggageStatusEnum status = LuggageStatusEnum.Registered;
+
+        //Initial Luggage status property values
+        UInt64 luggageStatusId = 12345;
+        string testStatusDeccription = "Test Status Description";
+        string latitude = "0";
+        string longitude = "0";
+               
+        
+
+
         DateTime lastStatusChange = DateTime.Now;
 
         [TestInitialize]
@@ -44,13 +55,21 @@ namespace LuggageTracker.UnitTest
         {
             DALContext = new InMemDAL();
 
+            luggageStatus = new LuggageStatus(status)
+            {
+                LuggageStatusId = luggageStatusId,
+                StatusDescription = testStatusDeccription,
+                Location= new GeoLocation(latitude,longitude),
+                DateTimeStamp = lastStatusChange,
+            };
+
             luggage = new Luggage(luggageId,name)
             {
                 Name = name,
                 Weight = weight,
                 Measurement = measurement,
                 Description = description,
-                Status = status,
+                Status = luggageStatus,
                 LastStatusChange = lastStatusChange,
             };
 
@@ -69,6 +88,7 @@ namespace LuggageTracker.UnitTest
         }
 
     #region LuggageTests
+
         [TestMethod]
         public async Task ShouldAddLuggageSuccessfully()
         {
@@ -83,7 +103,12 @@ namespace LuggageTracker.UnitTest
             Assert.AreEqual(measurement, newLuggage.Measurement);
             Assert.AreEqual(name, newLuggage.Name);
             Assert.AreEqual(description, newLuggage.Description);
-            Assert.AreEqual(status, newLuggage.Status);
+            Assert.AreEqual(testStatusDeccription, newLuggage.Status.StatusDescription);
+            Assert.AreEqual(status, newLuggage.Status.Status);
+            Assert.AreEqual(luggageStatusId, newLuggage.Status.LuggageStatusId);
+            Assert.AreEqual(longitude, newLuggage.Status.Location.Longitude);
+            Assert.AreEqual(latitude, newLuggage.Status.Location.Latitude);
+            Assert.AreEqual(lastStatusChange, newLuggage.Status.DateTimeStamp);
             Assert.AreEqual(lastStatusChange, newLuggage.LastStatusChange);
         }
 
@@ -103,13 +128,22 @@ namespace LuggageTracker.UnitTest
             string measurement = "1 Meters";
             DateTime lastStatusChange = DateTime.Now;
 
+            UInt64 statusId = 123456;
+            string statusDescription = "Test Status Description Updated";
+            string latitude = "1";
+            string longitude = "1";
+
 
             newLuggage.Description = description;
             newLuggage.Weight = weight;
             newLuggage.Name = name;
             newLuggage.Measurement = measurement;
             newLuggage.LastStatusChange = lastStatusChange;
-            newLuggage.Status = LuggageStatusEnum.CheckedIn;
+            newLuggage.Status.LuggageStatusId = statusId;
+            newLuggage.Status.Status = LuggageStatusEnum.CheckedIn;
+            newLuggage.Status.StatusDescription = statusDescription;
+            newLuggage.Status.Location.Latitude = latitude;
+            newLuggage.Status.Location.Longitude = longitude;
 
 
             await DALContext.UpdateLuggage(newLuggage);
@@ -120,7 +154,14 @@ namespace LuggageTracker.UnitTest
             Assert.AreEqual(name, updatedLuggage.Name);
             Assert.AreEqual(measurement, updatedLuggage.Measurement);
             Assert.AreEqual(lastStatusChange, updatedLuggage.LastStatusChange);
-            Assert.AreEqual(LuggageStatusEnum.CheckedIn, (object)updatedLuggage.Status);
+
+            Assert.AreEqual(statusId, newLuggage.Status.LuggageStatusId);
+            Assert.AreEqual(LuggageStatusEnum.CheckedIn,(object)newLuggage.Status.Status);
+            Assert.AreEqual(statusDescription, newLuggage.Status.StatusDescription);
+            Assert.AreEqual(latitude, newLuggage.Status.Location.Latitude);
+            Assert.AreEqual(longitude, newLuggage.Status.Location.Longitude);
+
+            //Assert.AreEqual(LuggageStatusEnum.CheckedIn, (object)updatedLuggage.Status);
         }
 
         [TestMethod]

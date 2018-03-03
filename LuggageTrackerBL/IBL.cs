@@ -15,7 +15,7 @@
 
         Task UpdateLuggage(Luggage luggage);
 
-        Task UpdateLuggageStatus(string luggageId, string luggageStatus);
+        Task UpdateLuggageStatus(string luggageId, LuggageStatus luggageStatus);
 
         Task<Luggage> GetLuggage(string tagId);
 

@@ -36,7 +36,7 @@
         string weight = "Test luggage weight";
         string measurement = "Test luggage measurement";
         string description = "Test luggage description";
-        LuggageStatusEnum status = LuggageStatusEnum.Registered;
+        LuggageStatus status = new LuggageStatus(LuggageStatusEnum.Registered);
         DateTime lastStatusChange = DateTime.Now;
 
         [TestInitialize]
@@ -103,7 +103,7 @@
             string weight = "1 KG";
             string name = "TestName";
             string measurement = "1 Meters";
-            LuggageStatusEnum status = LuggageStatusEnum.BoardedOnFlight;
+            LuggageStatus status = new LuggageStatus(LuggageStatusEnum.BoardedOnFlight);
             DateTime lastStatusChange = DateTime.Now;
 
 
@@ -129,17 +129,37 @@
         [TestMethod]
         public async Task ShouldUpdateLuggageStatusSuccessfully()
         {
+            LuggageStatus status = new LuggageStatus(LuggageStatusEnum.Registered);
+            status.StatusDescription = "Old Status description";
+            status.LuggageStatusId = 1234;
+            status.Location = new GeoLocation("111", "222");
+            status.DateTimeStamp = DateTime.MaxValue;
+
+
+            LuggageStatus UpdatedStatus = new LuggageStatus(LuggageStatusEnum.CheckedIn);
+            UpdatedStatus.StatusDescription = "Status description";
+            UpdatedStatus.LuggageStatusId = 123;
+            UpdatedStatus.Location = new GeoLocation("11", "22");
+            UpdatedStatus.DateTimeStamp = DateTime.MinValue;
+
+
             string tag = Guid.NewGuid().ToString();
-            string newStatus = "Registered";
+
             luggage.LuggageId = tag;
-            luggage.Status = LuggageStatusEnum.CheckedIn;
+            luggage.Status = status;
             await BizContext.AddLuggage(luggage);
 
-            await BizContext.UpdateLuggageStatus(tag, newStatus);
+            await BizContext.UpdateLuggageStatus(tag, UpdatedStatus);
 
             Luggage updatedLuggage = await BizContext.GetLuggage(tag);
             Assert.AreEqual(tag, updatedLuggage.LuggageId);
-            Assert.AreEqual(LuggageStatusEnum.Registered, (object)updatedLuggage.Status);
+            Assert.AreEqual("Status description", updatedLuggage.Status.StatusDescription);
+            Assert.AreEqual((UInt64)123, updatedLuggage.Status.LuggageStatusId);
+            Assert.AreEqual("11", updatedLuggage.Status.Location.Latitude);
+            Assert.AreEqual("22", updatedLuggage.Status.Location.Longitude);
+            Assert.AreEqual(DateTime.MinValue, updatedLuggage.Status.DateTimeStamp);
+            Assert.AreEqual(LuggageStatusEnum.CheckedIn, (object)updatedLuggage.Status.Status);
+            //Assert.AreEqual(LuggageStatusEnum.Registered, (object)updatedLuggage.Status);
         }
         
         [TestMethod]
@@ -157,18 +177,6 @@
 
             newPassenger.Luggages = luggages;
             Assert.AreEqual(newPassenger.Luggages.Count, 2);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(LuggageTrackerBizContextException))]
-        public async Task ShouldFailToUpdateLuggageStatusWithoutValidStatus()
-        {
-            string tag = Guid.NewGuid().ToString();
-            string newStatus = "New";
-            luggage.LuggageId = tag;
-            luggage.Status = LuggageStatusEnum.CheckedIn;
-            await BizContext.AddLuggage(luggage);
-            await BizContext.UpdateLuggageStatus(tag, newStatus);
         }
 
         [TestMethod]

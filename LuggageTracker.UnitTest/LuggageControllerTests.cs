@@ -28,7 +28,7 @@
         string weight = "Weight";
         string measurement = "Measurement";
         string description = "Description";
-        LuggageStatusEnum luggageStatus = LuggageStatusEnum.CheckedIn;
+        LuggageStatus luggageStatus = new LuggageStatus(LuggageStatusEnum.CheckedIn);
         DateTime lastStatusChange = DateTime.Now;
         
 
@@ -71,7 +71,7 @@
             Assert.AreEqual(newLuggage.Weight, weight);
             Assert.AreEqual(newLuggage.Measurement, measurement);
             Assert.AreEqual(newLuggage.Description, description);
-            Assert.AreEqual(newLuggage.Status, luggageStatus);
+            Assert.AreEqual(newLuggage.Status.Status, luggageStatus.Status);
             Assert.AreEqual(newLuggage.LastStatusChange, lastStatusChange);
         }
 
@@ -83,7 +83,7 @@
             weight = "Updates_Weight";
             measurement = "Updates_Measurement";
             description = "Updates_Description";
-            luggageStatus = LuggageStatusEnum.Registered;
+            luggageStatus = new LuggageStatus(LuggageStatusEnum.Registered);
             lastStatusChange = DateTime.Now;
 
             luggage.LuggageId = luggageId;
@@ -116,7 +116,7 @@
             Assert.AreEqual(newLuggage.Weight, weight);
             Assert.AreEqual(newLuggage.Measurement, measurement);
             Assert.AreEqual(newLuggage.Description, description);
-            Assert.AreEqual(newLuggage.Status, luggageStatus);
+            Assert.AreEqual(newLuggage.Status.Status, luggageStatus.Status);
             Assert.AreEqual(newLuggage.LastStatusChange, lastStatusChange);
         }
 
@@ -124,15 +124,16 @@
         public async Task ShouldUpdateLuggageStatusSuccessfully()
         {
             string luggageStringStatus = "Registered";
-            
+            //TODO   Detailed Lugage status Test            
             luggage.LuggageId = luggageId;
             HttpResponseMessage createResult = await luggageController.AddLuggage(luggage);
             Assert.AreEqual(createResult.StatusCode, HttpStatusCode.Created, "Verify luggage created");
 
-            luggage.Status = luggageStatus;
+            //luggage.Status = luggageStatus;
+            luggageStatus.Status = LuggageStatusEnum.Registered;
 
             luggageController.ControllerContext = new ControllerContext();
-            HttpResponseMessage updatedResult = await luggageController.UpdateLuggageStatus(luggageId, luggageStringStatus);
+            HttpResponseMessage updatedResult = await luggageController.UpdateLuggageStatus(luggageId, luggageStatus);
 
             Assert.AreEqual(updatedResult.StatusCode, HttpStatusCode.OK, "Verify luggage modified");
 
@@ -144,7 +145,7 @@
 
             Luggage newLuggage = JsonConvert.DeserializeObject<Luggage>(json);
 
-            Assert.AreEqual((object)newLuggage.Status, LuggageStatusEnum.Registered);
+            Assert.AreEqual(newLuggage.Status.Status, LuggageStatusEnum.Registered);
         }
 
         [TestMethod]

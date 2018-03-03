@@ -65,12 +65,12 @@
             }
         }
 
-        public async Task UpdateLuggageStatus(string luggageId, string luggageStatus)
+        public async Task UpdateLuggageStatus(string luggageId, LuggageStatus luggageStatus)
         {
             try
             {
                 Luggage luggage = await DAL.GetLuggage(luggageId);
-                LuggageStatusEnum status = (LuggageStatusEnum) Enum.Parse(typeof(LuggageStatusEnum), luggageStatus, true);
+               // LuggageStatusEnum status = (LuggageStatusEnum) Enum.Parse(typeof(LuggageStatusEnum), luggageStatus, true);
 
                 if (luggage == null)
                 {
@@ -78,7 +78,7 @@
                 }
                 else
                 {
-                    luggage.Status = status;
+                    luggage.Status = luggageStatus;
                     luggage.LastStatusChange = DateTime.Now;
                     await DAL.UpdateLuggage(luggage);
                 }
